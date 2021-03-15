@@ -8,7 +8,7 @@ IdealGasApp::IdealGasApp() :
 
   ci::app::setWindowSize(kWindowLength, kWindowWidth);
 
-  container_.GenerateParticle();
+  // container_.GenerateParticle();
 }
 
 void IdealGasApp::draw() {

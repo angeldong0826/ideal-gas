@@ -51,10 +51,10 @@ class GasContainer {
 
   glm::vec2 top_left_coordinate_; // top left corner of container
   glm::vec2 bottom_right_coordinate_; // bottom right corner of container
+  glm::vec2 kParticleInitialVelocity = {1.0,1.0}; // particle's initial velocity
   const size_t border_width_ = 8; // border width of container
   const size_t kParticleAmount = 30; // amount of particles in container
   const double kParticleRadius = 7.0; // particle radius
-  const double kParticleInitialVelocity = 1.0; // particle initial velocity
   const double kParticleMass = 1.0; // particle mass
   const ci::Color color = "pink"; // particle color
 

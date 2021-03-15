@@ -11,7 +11,7 @@ GasContainer::GasContainer(const glm::vec2& top_left_coordinate,
   top_left_coordinate_ = top_left_coordinate;
   bottom_right_coordinate_ = bottom_right_coordinate;
 
-//  GenerateParticle();
+  GenerateParticle();
 }
 
 void GasContainer::Display() const {
@@ -63,7 +63,6 @@ void GasContainer::AdvanceOneFrame() {
 
 size_t GasContainer::RandomNumberGenerator(size_t lower_bound, size_t upper_bound) {
   size_t random_number_ = (lower_bound + (rand() % (upper_bound - lower_bound + 1)));
-  //double random_number_ = rand() % (upper_bound - lower_bound) + lower_bound;
   return random_number_;
 }
 
@@ -76,11 +75,8 @@ void GasContainer::GenerateParticle() {
                                                       bottom_right_coordinate_.y - kParticleRadius);
     vec2 random_position_ = {random_position_x_, random_position_y_};
 
-    double random_velocity_x_ = RandomNumberGenerator(-1 * kParticleInitialVelocity, kParticleInitialVelocity);
-    double random_velocity_y_ = RandomNumberGenerator(-1 * kParticleInitialVelocity, kParticleInitialVelocity);
-    vec2 random_velocity_ = {random_velocity_x_, random_velocity_y_};
-
-    Particle generate_particle(kParticleMass, kParticleRadius, random_position_, random_velocity_, color);
+    Particle generate_particle(kParticleMass, kParticleRadius, random_position_,
+                               kParticleInitialVelocity, color);
     particle_.push_back(generate_particle);
   }
 

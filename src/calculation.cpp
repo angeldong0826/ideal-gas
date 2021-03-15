@@ -11,8 +11,8 @@ Calculation::Calculation(const glm::vec2 top_left_, const glm::vec2 bottom_right
 
 bool Calculation::CollideWithParticle(Particle particle,
                                       Particle target_particle) {
-  if ((glm::distance(particle.GetPosition(), target_particle.GetPosition())) <=
-      (particle.GetRadius() + target_particle.GetRadius()) &&
+  if (((glm::distance(particle.GetPosition(), target_particle.GetPosition())) <=
+      (particle.GetRadius() + target_particle.GetRadius())) &&
       (glm::dot((particle.GetVelocity() - target_particle.GetVelocity()),
                 (particle.GetPosition() - target_particle.GetPosition())) < 0)) {
     return true;
