@@ -10,6 +10,8 @@ GasContainer::GasContainer(const glm::vec2& top_left_coordinate,
     calculation_(Calculation(top_left_coordinate, bottom_right_coordinate)) {
   top_left_coordinate_ = top_left_coordinate;
   bottom_right_coordinate_ = bottom_right_coordinate;
+
+//  GenerateParticle();
 }
 
 void GasContainer::Display() const {
@@ -26,6 +28,7 @@ void GasContainer::Display() const {
 }
 
 void GasContainer::AdvanceOneFrame() {
+
   // particle colliding with other particles
   for (size_t particle = 0; particle < particle_.size(); particle++) {
     for (size_t target_particle = particle + 1; target_particle < particle_.size();
@@ -53,45 +56,63 @@ void GasContainer::AdvanceOneFrame() {
     } else if (calculation_.CollideWithWall(particle_.at(particle), 'y')) {
       calculation_.PostWallCollisionVelocity(particle_.at(particle), 'y');
     }
+
     calculation_.PostCollisionPosition(particle_.at(particle));
   }
 }
 
 size_t GasContainer::RandomNumberGenerator(size_t lower_bound, size_t upper_bound) {
   size_t random_number_ = (lower_bound + (rand() % (upper_bound - lower_bound + 1)));
+  //double random_number_ = rand() % (upper_bound - lower_bound) + lower_bound;
   return random_number_;
 }
 
-void GasContainer::GenerateParticle(const ci::Color& particle_color) {
-  double x_ = RandomNumberGenerator(top_left_coordinate_.x + kPinkRadius,
-                                    bottom_right_coordinate_.x - kPinkRadius);
-  double y_ = RandomNumberGenerator(top_left_coordinate_.y + kPinkRadius,
-                                    bottom_right_coordinate_.y - kPinkRadius);
+void GasContainer::GenerateParticle() {
+  for (size_t particle = 0; particle < kParticleAmount; particle++) {
 
-  if (particle_color == ci::Color("pink")) {
-    Particle pink_particle(kPinkMass, kPinkRadius, glm::vec2 {x_, y_},
-                             kPinkInitialVelocity, particle_color);
+    double random_position_x_ = RandomNumberGenerator(top_left_coordinate_.x + kParticleRadius,
+                                                      bottom_right_coordinate_.x - kParticleRadius);
+    double random_position_y_ = RandomNumberGenerator(top_left_coordinate_.y + kParticleRadius,
+                                                      bottom_right_coordinate_.y - kParticleRadius);
+    vec2 random_position_ = {random_position_x_, random_position_y_};
 
-    particle_.push_back(pink_particle);
+    double random_velocity_x_ = RandomNumberGenerator(-1 * kParticleInitialVelocity, kParticleInitialVelocity);
+    double random_velocity_y_ = RandomNumberGenerator(-1 * kParticleInitialVelocity, kParticleInitialVelocity);
+    vec2 random_velocity_ = {random_velocity_x_, random_velocity_y_};
 
-  } else if (particle_color == ci::Color("purple")) {
-    Particle purple_particle(kPurpleMass, kPurpleRadius, glm::vec2 {x_, y_},
-                             kPurpleInitialVelocity, particle_color);
-
-    particle_.push_back(purple_particle);
-
-  } else if (particle_color == ci::Color("orange")) {
-    Particle orange_particle(kOrangeMass, kOrangeRadius, glm::vec2 {x_, y_},
-                             kOrangeInitialVelocity, particle_color);
-
-    particle_.push_back(orange_particle);
-
-  } else {
-    Particle pink_particle(kPinkMass, kPinkRadius, glm::vec2 {x_, y_},
-                           kPinkInitialVelocity, particle_color);
-
-    particle_.push_back(pink_particle);
+    Particle generate_particle(kParticleMass, kParticleRadius, random_position_, random_velocity_, color);
+    particle_.push_back(generate_particle);
   }
+
+//  double x_ = RandomNumberGenerator(top_left_coordinate_.x + kPinkRadius,
+//                                    bottom_right_coordinate_.x - kPinkRadius);
+//  double y_ = RandomNumberGenerator(top_left_coordinate_.y + kPinkRadius,
+//                                    bottom_right_coordinate_.y - kPinkRadius);
+//
+//  if (particle_color == ci::Color("pink")) {
+//    Particle pink_particle(kPinkMass, kPinkRadius, glm::vec2 {x_, y_},
+//                             kPinkInitialVelocity, particle_color);
+//
+//    particle_.push_back(pink_particle);
+//
+//  } else if (particle_color == ci::Color("purple")) {
+//    Particle purple_particle(kPurpleMass, kPurpleRadius, glm::vec2 {x_, y_},
+//                             kPurpleInitialVelocity, particle_color);
+//
+//    particle_.push_back(purple_particle);
+//
+//  } else if (particle_color == ci::Color("orange")) {
+//    Particle orange_particle(kOrangeMass, kOrangeRadius, glm::vec2 {x_, y_},
+//                             kOrangeInitialVelocity, particle_color);
+//
+//    particle_.push_back(orange_particle);
+//
+//  } else {
+//    Particle pink_particle(kPinkMass, kPinkRadius, glm::vec2 {x_, y_},
+//                           kPinkInitialVelocity, particle_color);
+//
+//    particle_.push_back(pink_particle);
+//  }
 }
 
 }  // namespace idealgas

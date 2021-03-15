@@ -29,7 +29,6 @@ class Particle {
   glm::vec2 GetPosition() const;
   glm::vec2 GetVelocity();
   ci::Color GetColor() const;
-  // double GetSpeed();
 
   // Setters
   void SetMass(double mass);
