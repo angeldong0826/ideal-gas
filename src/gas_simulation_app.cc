@@ -2,8 +2,11 @@
 
 namespace idealgas {
 
-IdealGasApp::IdealGasApp() {
-  ci::app::setWindowSize(kWindowSize, kWindowSize);
+IdealGasApp::IdealGasApp() :
+  container_(glm::vec2 (kWindowLength, kMargin),
+             glm::vec2(kWindowLength - kMargin, kWindowWidth - kMargin)) {
+
+  ci::app::setWindowSize(kWindowLength, kWindowWidth);
 }
 
 void IdealGasApp::draw() {

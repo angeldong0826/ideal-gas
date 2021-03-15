@@ -12,18 +12,27 @@ namespace idealgas {
  */
 class IdealGasApp : public ci::app::App {
  public:
+  /**
+   * Constructor that initializes a container for particles to be put in.
+   */
   IdealGasApp();
 
+  /**
+   * Method that shows the current state of simulator.
+   */
   void draw() override;
+
+  /**
+   * Method that updates the current state of simulator.
+   */
   void update() override;
 
-  // TODO: Delete this comment. Feel free to play around with these variables
-  // provided that you can see the entire UI on your screen.
-  const int kWindowSize = 875;
-  const int kMargin = 100;
+  const size_t kWindowLength = 2500; // display window length
+  const size_t kWindowWidth = 2000; // display window width
+  const size_t kMargin = 500; // display margin
 
  private:
-  GasContainer container_;
+  GasContainer container_; // instance of container
 };
 
 }  // namespace idealgas
