@@ -53,12 +53,17 @@ void Calculation::PostCollisionPosition(Particle& particle) {
 
 
 void Calculation::PostParticleCollisionVelocity(Particle& particle, Particle& target_particle) {
-  double constant = ((2*target_particle.GetMass())/(particle.GetMass() +target_particle.GetMass())) * ((glm::dot(particle.GetVelocity() - target_particle.GetVelocity(),particle.GetPosition() - target_particle.GetPosition())) /(pow(glm::length(particle.GetPosition() - target_particle.GetPosition()), 2)));
+  double constant_in_velocity_equation = ((2 * target_particle.GetMass())/(particle.GetMass() +
+       target_particle.GetMass())) * ((glm::dot(particle.GetVelocity() -
+       target_particle.GetVelocity(),particle.GetPosition() -
+       target_particle.GetPosition())) / (pow(glm::length(particle.GetPosition() -
+       target_particle.GetPosition()), 2)));
+
   particle.SetVelocity(particle.GetVelocity() -
-
-                      (glm::vec2(particle.GetPosition().x*constant, particle.GetPosition().y * constant)) +
-
-                      (glm::vec2(target_particle.GetPosition().x * constant, particle.GetPosition().y * constant)));
+      (glm::vec2(particle.GetPosition().x * constant_in_velocity_equation,
+                 particle.GetPosition().y * constant_in_velocity_equation)) +
+      (glm::vec2(target_particle.GetPosition().x * constant_in_velocity_equation,
+                 particle.GetPosition().y * constant_in_velocity_equation)));
 }
 
 void Calculation::PostWallCollisionVelocity(Particle& particle, char axis) {

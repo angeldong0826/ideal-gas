@@ -45,34 +45,32 @@ class GasContainer {
   /**
    * Method that generates a new particle to be added to the container.
    */
-  void GenerateParticle();
+  void GenerateParticle(const ci::Color& particle_color);
 
  private:
-  /**
-   * This variable is just for the purposes of demonstrating how to make a shape move
-   * across a screen. Please remove it once you start working on your code.
-   */
-  int dummy_variable_ = 0;
 
   // container characteristics
   glm::vec2 top_left_coordinate_; // top left corner of container
   glm::vec2 bottom_right_coordinate_; // bottom right corner of container
-  const size_t border_width_ = 25; // border width of container
+  const size_t border_width_ = 15; // border width of container
 
   Calculation calculation_; // calculation purposes
   std::vector<Particle> particle_; // vector of particles in container
 
-//  // pink particles attributes
-//  const double kPinkMass = 10.0;
-//  const double kPinkRadius = 10.0;
-//
-//  // purple particles attributes
-//  const double kPurpleMass = 25.0;
-//  const double kPurpleRadius = 25.0;
-//
-//  // blue particles attributes
-//  const double kBlueMass = 40.0;
-//  const double kBlueRadius = 40.0;
+  // pink particles attributes
+  const double kPinkMass = 10.0;
+  const double kPinkRadius = 10.0;
+  const glm::vec2 kPinkInitialVelocity = {20.0,1.0};
+
+  // purple particles attributes
+  const double kPurpleMass = 22.0;
+  const double kPurpleRadius = 22.0;
+  const glm::vec2 kPurpleInitialVelocity = {10.5, -0.85};
+
+  // orange particles attributes
+  const double kOrangeMass = 40.0;
+  const double kOrangeRadius = 40.0;
+  const glm::vec2 kOrangeInitialVelocity = {-6.0, -0.6};
 };
 
 }  // namespace idealgas
