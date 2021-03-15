@@ -27,11 +27,11 @@ class IdealGasApp : public ci::app::App {
    */
   void update() override;
 
-  const size_t kWindowLength = 2500; // display window length
-  const size_t kWindowWidth = 2000; // display window width
-  const size_t kMargin = 500; // display margin
-
  private:
+  const size_t kWindowLength = 530; // display window length
+  const size_t kWindowWidth = 530; // display window width
+  const size_t kMargin = 100; // display margin
+
   GasContainer container_; // instance of container
 };
 
