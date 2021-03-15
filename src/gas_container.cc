@@ -41,7 +41,19 @@ void GasContainer::AdvanceOneFrame() {
     }
 
   // particle colliding with wall
-    if (calculation_.)
+    if (calculation_.CollideWithWall(particle_.at(particle), 'x') &&
+        calculation_.CollideWithWall(particle_.at(particle), 'y')) {
+
+      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'x');
+      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'y');
+
+    } else if (calculation_.CollideWithWall(particle_.at(particle), 'x')) {
+      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'x');
+
+    } else if (calculation_.CollideWithWall(particle_.at(particle), 'y')) {
+      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'y');
+    }
+    calculation_.PostCollisionPosition(particle_.at(particle));
   }
 }
 
