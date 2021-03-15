@@ -48,19 +48,23 @@ class GasContainer {
   void GenerateParticle();
 
  private:
-
-  glm::vec2 top_left_coordinate_; // top left corner of container
-  glm::vec2 bottom_right_coordinate_; // bottom right corner of container
-  glm::vec2 kParticleInitialVelocity = {1.0,1.0}; // particle's initial velocity
-  const size_t border_width_ = 8; // border width of container
+  // container attributes
+  const size_t border_width_ = 7; // border width of container
   const size_t kParticleAmount = 30; // amount of particles in container
+
+  // particle attributes
   const double kParticleRadius = 7.0; // particle radius
   const double kParticleMass = 1.0; // particle mass
   const ci::Color color = "pink"; // particle color
+  const glm::vec2 kParticleInitialVelocity = {1.0,1.0}; // particle's initial velocity
 
-  Calculation calculation_; // calculation purposes
+  glm::vec2 top_left_coordinate_; // top left corner of container
+  glm::vec2 bottom_right_coordinate_; // bottom right corner of container
+
   std::vector<Particle> particle_; // vector of particles in container
+  Calculation calculation_; // calculation purposes
 
+//  FOR WEEK 2
 //  // pink particles attributes
 //  const double kPinkMass = 10.0;
 //  const double kPinkRadius = 10.0;

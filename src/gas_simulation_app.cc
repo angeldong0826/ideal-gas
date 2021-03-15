@@ -7,8 +7,6 @@ IdealGasApp::IdealGasApp() :
              glm::vec2(kWindowLength - kMargin, kWindowWidth - kMargin))) {
 
   ci::app::setWindowSize(kWindowLength, kWindowWidth);
-
-  // container_.GenerateParticle();
 }
 
 void IdealGasApp::draw() {

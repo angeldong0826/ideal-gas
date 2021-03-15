@@ -1,18 +1,15 @@
 #pragma once
 
 #include <cinder/Color.h>
-
 #include <string>
 #include <vector>
-
-//#include "calculation.h"
 
 namespace idealgas {
 
 class Particle {
  public:
   /**
-   * Constructor that initializes particle characteristics.
+   * Constructor that initializes particle attributes.
    *
    * @param mass particle mass as a double
    * @param radius particle radius as a double
