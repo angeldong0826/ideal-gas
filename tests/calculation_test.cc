@@ -121,95 +121,6 @@ TEST_CASE("Particle collision with container wall") {
   }
 }
 
-//TEST_CASE("Position update post-particle-particle collision") {
-//  Particle particle_moving_right(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {1.0,0.0}, "pink");
-//  Particle particle_moving_left(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {-1.0,0.0}, "pink");
-//  Particle particle_moving_up(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {0.0,1.0}, "pink");
-//  Particle particle_moving_down(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {0.0,-1.0}, "pink");
-//  Particle particle_moving_diagonally(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {1.0,1.0}, "pink");
-//  Particle particle_moving_antidiagonally(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {-1.0,-1.0}, "pink");
-//
-//  SECTION("Collision from right") {
-//    Particle target_particle(1.0, 1.0, glm::vec2 {101.0, 100.0}, glm::vec2 {-1.0,0}, "pink");
-//    REQUIRE(calculation.CollideWithParticle(particle_moving_right, target_particle));
-//
-//    calculation.PostCollisionPosition(particle_moving_right);
-//    calculation.PostCollisionPosition(target_particle);
-//
-//    REQUIRE(particle_moving_right.GetPosition().x == 101.0f);
-//    REQUIRE(particle_moving_right.GetPosition().y == 100.0f);
-//    REQUIRE(target_particle.GetPosition().x == 100.0f);
-//    REQUIRE(target_particle.GetPosition().y == 100.0f);
-//  }
-//
-//  SECTION("Collision from left") {
-//    Particle target_particle(1.0,1.0,glm::vec2 {99.0, 100.0}, glm::vec2 {1.0,0}, "pink");
-//    REQUIRE(calculation.CollideWithParticle(particle_moving_left, target_particle));
-//
-//    calculation.PostCollisionPosition(particle_moving_left);
-//    calculation.PostCollisionPosition(target_particle);
-//
-//    REQUIRE(particle_moving_left.GetPosition().x == 99.0f);
-//    REQUIRE(particle_moving_left.GetPosition().y == 100.0f);
-//    REQUIRE(target_particle.GetPosition().x == 100.0f);
-//    REQUIRE(target_particle.GetPosition().y == 100.0f);
-//  }
-//
-//  SECTION("Collision from top") {
-//    Particle target_particle(1.0,1.0,glm::vec2 {100.0,101.0}, glm::vec2 {0.0,-1.0}, "pink");
-//    REQUIRE(calculation.CollideWithParticle(particle_moving_up, target_particle));
-//
-//    calculation.PostCollisionPosition(particle_moving_up);
-//    calculation.PostCollisionPosition(target_particle);
-//
-//    REQUIRE(particle_moving_up.GetPosition().x == 100.0f);
-//    REQUIRE(particle_moving_up.GetPosition().y == 101.0f);
-//    REQUIRE(target_particle.GetPosition().x == 100.0f);
-//    REQUIRE(target_particle.GetPosition().y == 100.0f);
-//  }
-//
-//  SECTION("Collision from bottom") {
-//    Particle target_particle(1.0,1.0,glm::vec2 {100.0,99.0}, glm::vec2 {0.0,1.0}, "pink");
-//    REQUIRE(calculation.CollideWithParticle(particle_moving_down, target_particle));
-//
-//    calculation.PostCollisionPosition(particle_moving_down);
-//    calculation.PostCollisionPosition(target_particle);
-//
-//    REQUIRE(particle_moving_down.GetPosition().x == 100.0f);
-//    REQUIRE(particle_moving_down.GetPosition().y == 99.0f);
-//    REQUIRE(target_particle.GetPosition().x == 100.0f);
-//    REQUIRE(target_particle.GetPosition().y == 100.0f);
-//  }
-//
-//  SECTION("Diagonal collision") {
-//    Particle target_particle(1.0,1.0,glm::vec2 {101.0,101.0}, glm::vec2 {-1.0,-1.0}, "pink");
-//    REQUIRE(calculation.CollideWithParticle(particle_moving_diagonally, target_particle));
-//
-//    calculation.PostCollisionPosition(particle_moving_diagonally);
-//    calculation.PostCollisionPosition(target_particle);
-//
-//    REQUIRE(particle_moving_diagonally.GetPosition().x == 101.0f);
-//    REQUIRE(particle_moving_diagonally.GetPosition().y == 101.0f);
-//    REQUIRE(target_particle.GetPosition().x == 100.0f);
-//    REQUIRE(target_particle.GetPosition().y == 100.0f);
-//  }
-//
-//  SECTION("Anti-diagonal collision") {
-//    Particle target_particle(1.0,1.0,glm::vec2 {99.0,99.0}, glm::vec2 {1.0,1.0}, "pink");
-//    REQUIRE(calculation.CollideWithParticle(particle_moving_antidiagonally, target_particle));
-//
-//    calculation.PostParticleCollisionVelocity(particle_moving_antidiagonally, target_particle);
-//
-//    calculation.PostCollisionPosition(particle_moving_antidiagonally);
-//    calculation.PostCollisionPosition(target_particle);
-//
-//    REQUIRE(particle_moving_antidiagonally.GetPosition().x == 99.0f);
-//    REQUIRE(particle_moving_antidiagonally.GetPosition().y == 99.0f);
-//    REQUIRE(target_particle.GetPosition().x == 100.0f);
-//    REQUIRE(target_particle.GetPosition().y == 100.0f);
-//  }
-//}
-
 TEST_CASE("Velocity update post-particle-particle collision") {
   SECTION("Collision from right") {
     Particle particle_moving_right(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {1.0,0.0}, "pink");
@@ -293,6 +204,111 @@ TEST_CASE("Velocity update post-particle-particle collision") {
     REQUIRE(particle_moving_antidiagonally.GetVelocity().y == 1.0f);
     REQUIRE(target_particle.GetVelocity().x == 1.0f);
     REQUIRE(target_particle.GetVelocity().y == 1.0f);
+  }
+}
+
+TEST_CASE("Position update post-particle-particle collision") {
+  Particle particle_moving_right(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {1.0,0.0}, "pink");
+  Particle particle_moving_left(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {-1.0,0.0}, "pink");
+  Particle particle_moving_up(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {0.0,1.0}, "pink");
+  Particle particle_moving_down(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {0.0,-1.0}, "pink");
+  Particle particle_moving_diagonally(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {1.0,1.0}, "pink");
+  Particle particle_moving_antidiagonally(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {-1.0,-1.0}, "pink");
+
+  SECTION("Collision from right") {
+    Particle target_particle(1.0, 1.0, glm::vec2 {101.0, 100.0}, glm::vec2 {-1.0,0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_right, target_particle));
+
+    particle_moving_right.SetVelocity(calculation.PostParticleCollisionVelocity(particle_moving_right, target_particle));
+    target_particle.SetVelocity(calculation.PostParticleCollisionVelocity(target_particle, particle_moving_right));
+
+    calculation.PostCollisionPosition(particle_moving_right);
+    calculation.PostCollisionPosition(target_particle);
+
+    REQUIRE(particle_moving_right.GetPosition().x == 99.0f);
+    REQUIRE(particle_moving_right.GetPosition().y == 100.0f);
+    REQUIRE(target_particle.GetPosition().x == 100.0f);
+    REQUIRE(target_particle.GetPosition().y == 100.0f);
+  }
+
+  SECTION("Collision from left") {
+    Particle target_particle(1.0,1.0,glm::vec2 {99.0, 100.0}, glm::vec2 {1.0,0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_left, target_particle));
+
+    particle_moving_left.SetVelocity(calculation.PostParticleCollisionVelocity(particle_moving_left, target_particle));
+    target_particle.SetVelocity(calculation.PostParticleCollisionVelocity(target_particle, particle_moving_left));
+
+    calculation.PostCollisionPosition(particle_moving_left);
+    calculation.PostCollisionPosition(target_particle);
+
+    REQUIRE(particle_moving_left.GetPosition().x == 101.0f);
+    REQUIRE(particle_moving_left.GetPosition().y == 100.0f);
+    REQUIRE(target_particle.GetPosition().x == 100.0f);
+    REQUIRE(target_particle.GetPosition().y == 100.0f);
+  }
+
+  SECTION("Collision from top") {
+    Particle target_particle(1.0,1.0,glm::vec2 {100.0,101.0}, glm::vec2 {0.0,-1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_up, target_particle));
+
+    particle_moving_up.SetVelocity(calculation.PostParticleCollisionVelocity(particle_moving_up, target_particle));
+    target_particle.SetVelocity(calculation.PostParticleCollisionVelocity(target_particle, particle_moving_up));
+
+    calculation.PostCollisionPosition(particle_moving_up);
+    calculation.PostCollisionPosition(target_particle);
+
+    REQUIRE(particle_moving_up.GetPosition().x == 100.0f);
+    REQUIRE(particle_moving_up.GetPosition().y == 99.0f);
+    REQUIRE(target_particle.GetPosition().x == 100.0f);
+    REQUIRE(target_particle.GetPosition().y == 100.0f);
+  }
+
+  SECTION("Collision from bottom") {
+    Particle target_particle(1.0,1.0,glm::vec2 {100.0,99.0}, glm::vec2 {0.0,1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_down, target_particle));
+
+    particle_moving_down.SetVelocity(calculation.PostParticleCollisionVelocity(particle_moving_down, target_particle));
+    target_particle.SetVelocity(calculation.PostParticleCollisionVelocity(target_particle, particle_moving_down));
+
+    calculation.PostCollisionPosition(particle_moving_down);
+    calculation.PostCollisionPosition(target_particle);
+
+    REQUIRE(particle_moving_down.GetPosition().x == 100.0f);
+    REQUIRE(particle_moving_down.GetPosition().y == 101.0f);
+    REQUIRE(target_particle.GetPosition().x == 100.0f);
+    REQUIRE(target_particle.GetPosition().y == 100.0f);
+  }
+
+  SECTION("Diagonal collision") {
+    Particle target_particle(1.0,1.0,glm::vec2 {101.0,101.0}, glm::vec2 {-1.0,-1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_diagonally, target_particle));
+
+    particle_moving_diagonally.SetVelocity(calculation.PostParticleCollisionVelocity(particle_moving_diagonally, target_particle));
+    target_particle.SetVelocity(calculation.PostParticleCollisionVelocity(target_particle, particle_moving_diagonally));
+
+    calculation.PostCollisionPosition(particle_moving_diagonally);
+    calculation.PostCollisionPosition(target_particle);
+
+    REQUIRE(particle_moving_diagonally.GetPosition().x == 99.0f);
+    REQUIRE(particle_moving_diagonally.GetPosition().y == 99.0f);
+    REQUIRE(target_particle.GetPosition().x == 100.0f);
+    REQUIRE(target_particle.GetPosition().y == 100.0f);
+  }
+
+  SECTION("Anti-diagonal collision") {
+    Particle target_particle(1.0,1.0,glm::vec2 {99.0,99.0}, glm::vec2 {1.0,1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_antidiagonally, target_particle));
+
+    particle_moving_antidiagonally.SetVelocity(calculation.PostParticleCollisionVelocity(particle_moving_antidiagonally, target_particle));
+    target_particle.SetVelocity(calculation.PostParticleCollisionVelocity(target_particle, particle_moving_antidiagonally));
+
+    calculation.PostCollisionPosition(particle_moving_antidiagonally);
+    calculation.PostCollisionPosition(target_particle);
+
+    REQUIRE(particle_moving_antidiagonally.GetPosition().x == 101.0f);
+    REQUIRE(particle_moving_antidiagonally.GetPosition().y == 101.0f);
+    REQUIRE(target_particle.GetPosition().x == 100.0f);
+    REQUIRE(target_particle.GetPosition().y == 100.0f);
   }
 }
 
