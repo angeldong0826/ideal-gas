@@ -46,7 +46,7 @@ class Calculation {
    * @param particle collided
    * @param target_particle particle collided with first particle
    */
-  void PostParticleCollisionVelocity(Particle& particle, Particle& target_particle);
+  glm::vec2 PostParticleCollisionVelocity(Particle& particle, Particle& target_particle);
 
   /**
    * Method that calculates velocity after particle-wall collision.

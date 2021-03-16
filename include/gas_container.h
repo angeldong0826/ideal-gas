@@ -50,11 +50,11 @@ class GasContainer {
  private:
   // container attributes
   const size_t border_width_ = 7; // border width of container
-  const size_t kParticleAmount = 30; // amount of particles in container
+  const size_t kParticleAmount = 20; // amount of particles in container
 
   // particle attributes
   const double kParticleRadius = 7.0; // particle radius
-  const double kParticleMass = 1.0; // particle mass
+  const double kParticleMass = 5.0; // particle mass
   const ci::Color color = "pink"; // particle color
   const glm::vec2 kParticleInitialVelocity = {1.0,1.0}; // particle's initial velocity
 

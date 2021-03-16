@@ -30,43 +30,49 @@ void GasContainer::Display() const {
 
 void GasContainer::AdvanceOneFrame() {
   // particle colliding with other particles
-  for (size_t particle = 0; particle < particle_.size(); particle++) {
-    for (size_t target_particle = particle + 1; target_particle < particle_.size();
-                                                target_particle++) {
+  for (size_t i = 0; i < particle_.size(); i++) {
+    for (size_t j = i + 1; j < particle_.size(); j++) {
+      // determines resulting velocity if i collides with another
+      if (calculation_.CollideWithParticle(particle_.at(i), particle_.at(j))) {
 
-      // determines resulting velocity if particle collides with another
-      if (calculation_.CollideWithParticle(particle_.at(particle),
-                                      particle_.at(target_particle))) {
-        calculation_.PostParticleCollisionVelocity(particle_.at(particle),particle_.at(target_particle));
+        glm::vec2 velocity_1 = calculation_.PostParticleCollisionVelocity(particle_.at(i),particle_.at(j));
+        glm::vec2 velocity_2 = calculation_.PostParticleCollisionVelocity(particle_.at(j),particle_.at(i));
 
-        // set resulting velocity as new velocity of particle
-        calculation_.PostCollisionPosition(particle_.at(particle));
-        calculation_.PostCollisionPosition(particle_.at(target_particle));
+        particle_[i].SetVelocity(velocity_1);
+        particle_[j].SetVelocity(velocity_2);
+        // set resulting velocity as new velocity of i
+        //        calculation_.PostCollisionPosition(particle_.at(i));
+        //        calculation_.PostCollisionPosition(particle_.at(j));
       }
     }
+  }
 
-   // particle colliding with wall
+   // i colliding with wall
+  for (size_t i = 0; i < particle_.size(); ++i) {
+    // i collides with corner, calculates and updates new velocity
+    if (calculation_.CollideWithWall(particle_.at(i), 'x') &&
+        calculation_.CollideWithWall(particle_.at(i), 'y')) {
 
-    // particle collides with corner, calculates and updates new velocity
-    if (calculation_.CollideWithWall(particle_.at(particle), 'x') &&
-        calculation_.CollideWithWall(particle_.at(particle), 'y')) {
+      calculation_.PostWallCollisionVelocity(particle_.at(i), 'x');
+      calculation_.PostWallCollisionVelocity(particle_.at(i), 'y');
 
-      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'x');
-      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'y');
-
-    // particle collides with top or bottom wall of container
+    // i collides with top or bottom wall of container
     // calculates and updates new velocity
-    } else if (calculation_.CollideWithWall(particle_.at(particle), 'x')) {
-      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'x');
+    } else if (calculation_.CollideWithWall(particle_.at(i), 'x')) {
+      calculation_.PostWallCollisionVelocity(particle_.at(i), 'x');
 
-    // particle collides with left or right wall of container
+    // i collides with left or right wall of container
     // calculates and updates new velocity
-    } else if (calculation_.CollideWithWall(particle_.at(particle), 'y')) {
-      calculation_.PostWallCollisionVelocity(particle_.at(particle), 'y');
+    } else if (calculation_.CollideWithWall(particle_.at(i), 'y')) {
+      calculation_.PostWallCollisionVelocity(particle_.at(i), 'y');
     }
 
     // updates new position after collision
-    calculation_.PostCollisionPosition(particle_.at(particle));
+//    calculation_.PostCollisionPosition(particle_.at(i));
+  }
+
+  for (size_t i = 0; i < particle_.size(); ++i) {
+    calculation_.PostCollisionPosition(particle_[i]);
   }
 }
 

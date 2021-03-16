@@ -7,35 +7,35 @@ using idealgas::GasContainer;
 using idealgas::Calculation;
 using idealgas::Particle;
 
-//TEST_CASE("Particles colliding with other particles") {
-//  Calculation calculation(glm::vec2 {0.0,0.0}, glm::vec2 {200.0,200.0});
-//  Particle particle(1.0, 1.0, glm::vec2 {19.9,20.0}, glm::vec2 {0.1,0}, "pink");
-//  Particle target_particle(1.0, 1.0, glm::vec2 {21.5, 21.4}, glm::vec2 {-0.1,0}, "pink");
-//
-//  SECTION("Particle does not collide with particle") {
-//
-//  }
-//
-//  SECTION("Particle collides with particle on right") {
-//    REQUIRE(calculation.CollideWithParticle(particle, target_particle));
-//  }
-//
-//  SECTION("Particle collides with particle on left") {
-//
-//  }
-//
-//  SECTION("Particle collides with particle on top") {
-//
-//  }
-//
-//  SECTION("Particle collides with particle on bottom") {
-//
-//  }
-//
-//  SECTION("Particle collides with particle diagonally") {
-//
-//  }
-//}
+TEST_CASE("Particles colliding with other particles") {
+  Calculation calculation(glm::vec2 {0.0,0.0}, glm::vec2 {200.0,200.0});
+  Particle particle(1.0, 1.0, glm::vec2 {19.9,20.0}, glm::vec2 {0.1,0}, "pink");
+  Particle target_particle(1.0, 1.0, glm::vec2 {21.5, 21.4}, glm::vec2 {-0.1,0}, "pink");
+
+  SECTION("Particle does not collide with particle") {
+
+  }
+
+  SECTION("Particle collides with particle on right") {
+    REQUIRE(calculation.CollideWithParticle(particle, target_particle));
+  }
+
+  SECTION("Particle collides with particle on left") {
+
+  }
+
+  SECTION("Particle collides with particle on top") {
+
+  }
+
+  SECTION("Particle collides with particle on bottom") {
+
+  }
+
+  SECTION("Particle collides with particle diagonally") {
+
+  }
+}
 
 TEST_CASE("Particle colliding with container wall") {
   SECTION("Particle does not collide with wall") {
