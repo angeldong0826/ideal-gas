@@ -68,7 +68,7 @@ TEST_CASE("Particle bounces off of other particles") {
   }
 }
 
-TEST_CASE("Particle not bouncing off of other particles") {
+TEST_CASE("Particle not bouncing off of other particles due to moving in different directions") {
 
   // middle particle at the center of container for testing convenience
   Particle middle_particle(1.0, 1.0, glm::vec2{100.0, 100.0},
@@ -203,7 +203,7 @@ TEST_CASE("Particle bounces off of container wall") {
   }
 }
 
-TEST_CASE("Particle not bouncing off of container wall") {
+TEST_CASE("Particle not bouncing off of container wall due to moving in different directions") {
 
   SECTION("Does not bounce off right wall") {
     Particle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{-1.0, 0.0},
