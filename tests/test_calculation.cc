@@ -7,43 +7,68 @@ using idealgas::GasContainer;
 using idealgas::Calculation;
 using idealgas::Particle;
 
+glm::vec2 top_left_coordinate = {0.0, 0.0};
+glm::vec2 bottom_right_coordinate = {200.0, 200.0};
+Calculation calculation(top_left_coordinate, bottom_right_coordinate);
+
 TEST_CASE("Particles colliding with other particles") {
-  Calculation calculation(glm::vec2 {0.0,0.0}, glm::vec2 {200.0,200.0});
-  Particle particle(1.0, 1.0, glm::vec2 {19.9,20.0}, glm::vec2 {0.1,0}, "pink");
-  Particle target_particle(1.0, 1.0, glm::vec2 {21.5, 21.4}, glm::vec2 {-0.1,0}, "pink");
+  Particle particle_moving_right(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {1.0,0.0}, "pink");
+  Particle particle_moving_left(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {-1.0,0.0}, "pink");
+  Particle particle_moving_up(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {0.0,1.0}, "pink");
+  Particle particle_moving_down(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {0.0,-1.0}, "pink");
+  Particle particle_moving_diagonally(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {1.0,1.0}, "pink");
+  Particle particle_moving_antidiagonally(1.0, 1.0, glm::vec2 {100.0,100.0}, glm::vec2 {-1.0,-1.0}, "pink");
 
   SECTION("Particle does not collide with particle") {
-
+    Particle target_particle(1.0, 1.0, glm::vec2 {101.1,100.0}, glm::vec2 {1.0,0}, "pink");
+    REQUIRE_FALSE(calculation.CollideWithParticle(particle_moving_right, target_particle));
   }
 
   SECTION("Particle collides with particle on right") {
-    REQUIRE(calculation.CollideWithParticle(particle, target_particle));
+    Particle target_particle(1.0, 1.0, glm::vec2 {101.0, 100.0}, glm::vec2 {-1.0,0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_right, target_particle));
   }
 
   SECTION("Particle collides with particle on left") {
-
+    Particle target_particle(1.0,1.0,glm::vec2 {99.0, 100.0}, glm::vec2 {1.0,0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_left, target_particle));
   }
 
   SECTION("Particle collides with particle on top") {
-
+    Particle target_particle(1.0,1.0,glm::vec2 {100.0,101.0}, glm::vec2 {0.0,-1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_up, target_particle));
   }
 
   SECTION("Particle collides with particle on bottom") {
-
+    Particle target_particle(1.0,1.0,glm::vec2 {100.0,99.0}, glm::vec2 {0.0,1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_down, target_particle));
   }
 
   SECTION("Particle collides with particle diagonally") {
+    Particle target_particle(1.0,1.0,glm::vec2 {101.0,101.0}, glm::vec2 {-1.0,-1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_diagonally, target_particle));
+  }
 
+  SECTION("Particle collides with particle anti-diagonally") {
+    Particle target_particle(1.0,1.0,glm::vec2 {99.0,99.0}, glm::vec2 {1.0,1.0}, "pink");
+    REQUIRE(calculation.CollideWithParticle(particle_moving_antidiagonally, target_particle));
   }
 }
 
 TEST_CASE("Particle colliding with container wall") {
-  SECTION("Particle does not collide with wall") {
+  SECTION("Particle does not collide with left wall") {
+    Particle particle(1.0,1.0,glm::vec2 {198.9,100.0}, glm::vec2 {1.0,0.0}, "pink");
+    REQUIRE_FALSE(calculation.CollideWithWall(particle, 'y'));
+  }
 
+  SECTION("Particle does not collide with right wall") {
+    Particle particle(1.0,1.0,glm::vec2 {1.1,100.0}, glm::vec2 {-1.0,0.0}, "pink");
+    REQUIRE_FALSE(calculation.CollideWithWall(particle, 'y'));
   }
 
   SECTION("Particle collides with right wall") {
-
+    Particle particle(1.0,1.0,glm::vec2 {199.0,100.0}, glm::vec2 {1.0,0.0}, "pink");
+    REQUIRE(calculation.CollideWithWall(particle,'y'));
   }
 
   SECTION("Particle collides with left wall") {

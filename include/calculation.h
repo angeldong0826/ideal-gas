@@ -45,6 +45,7 @@ class Calculation {
    *
    * @param particle collided
    * @param target_particle particle collided with first particle
+   * @return new calculated velocity after collision as a vector
    */
   glm::vec2 PostParticleCollisionVelocity(Particle& particle, Particle& target_particle);
 

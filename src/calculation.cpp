@@ -31,11 +31,11 @@ bool Calculation::CollideWithWall(Particle& particle, char axis) {
 
   // if particle collides with top or bottom wall of container
   if (wall_direction == 'x') {
-    if ((particle.GetVelocity().x < 0) && particle.GetPosition().x -
-         particle.GetRadius() <= top_left_coordinate_.x) {
+    if ((particle.GetVelocity().y < 0) && particle.GetPosition().y -
+         particle.GetRadius() <= top_left_coordinate_.y) {
       return true;
-    } else if ((particle.GetVelocity().x > 0) && particle.GetPosition().x +
-         particle.GetRadius() >= bottom_right_coordinate_.x) {
+    } else if ((particle.GetVelocity().y > 0) && particle.GetPosition().y +
+         particle.GetRadius() >= bottom_right_coordinate_.y) {
       return true;
     }
 
@@ -44,11 +44,11 @@ bool Calculation::CollideWithWall(Particle& particle, char axis) {
 
   // if particle collides with left or right wall of container
   if (wall_direction == 'y') {
-    if ((particle.GetVelocity().y < 0) && particle.GetPosition().y -
-         particle.GetRadius() <= top_left_coordinate_.y) {
+    if ((particle.GetVelocity().x < 0) && particle.GetPosition().x -
+         particle.GetRadius() <= top_left_coordinate_.x) {
       return true;
-    } else if ((particle.GetVelocity().y > 0) && particle.GetPosition().y +
-         particle.GetRadius() >= bottom_right_coordinate_.y) {
+    } else if ((particle.GetVelocity().x > 0) && particle.GetPosition().x +
+         particle.GetRadius() >= bottom_right_coordinate_.x) {
       return true;
     } return false;
   }
@@ -71,15 +71,11 @@ glm::vec2 Calculation::PostParticleCollisionVelocity(Particle& particle, Particl
        target_particle.GetPosition())) / (pow(glm::length(particle.GetPosition() -
        target_particle.GetPosition()), 2)));
 
-  glm::vec2 a = glm::vec2(constant_in_velocity_equation * (particle.GetPosition().x - target_particle.GetPosition().x),
+  // finishes calculating resulting velocity
+  glm::vec2 resulting_velocity = glm::vec2(constant_in_velocity_equation * (particle.GetPosition().x - target_particle.GetPosition().x),
                           constant_in_velocity_equation * (particle.GetPosition().y - target_particle.GetPosition().y));
-  // finishes calculating and setting resulting velocity to particle collided
-//  particle.SetVelocity(particle.GetVelocity() -
-//      (glm::vec2(particle.GetPosition().x * constant_in_velocity_equation,
-//                 particle.GetPosition().y * constant_in_velocity_equation)) +
-//      (glm::vec2(target_particle.GetPosition().x * constant_in_velocity_equation,
-//                 particle.GetPosition().y * constant_in_velocity_equation)));
-  return particle.GetVelocity() - a;
+
+  return particle.GetVelocity() - resulting_velocity;
 }
 
 void Calculation::PostWallCollisionVelocity(Particle& particle, char axis) {
@@ -92,17 +88,13 @@ void Calculation::PostWallCollisionVelocity(Particle& particle, char axis) {
   // lower-case all input axis values
   char wall_direction = towlower(axis);
 
-  if (wall_direction != 'x' && wall_direction != 'y') {
-    return;
-  }
-
-  // if particle hits the top of bottom wall of container
-  if (wall_direction == 'x') {
-    x_velocity = -1 * particle.GetVelocity().x;
-  }
-  // if particle hits the left or right wall of container
+  // if particle hits the left of right wall of container
   if (wall_direction == 'y') {
-    y_velocity = -1 * particle.GetVelocity().y;
+    x_velocity *= -1;
+  }
+  // if particle hits the top or bottom wall of container
+  if (wall_direction == 'x') {
+    y_velocity *= -1;
   }
 
   // update particle velocity
