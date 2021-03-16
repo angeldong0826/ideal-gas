@@ -1,5 +1,4 @@
 #include "calculation.h"
-
 #include <glm/vec2.hpp>
 
 namespace idealgas {

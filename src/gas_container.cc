@@ -3,8 +3,6 @@
 
 namespace idealgas {
 
-using glm::vec2;
-
 GasContainer::GasContainer(const glm::vec2& top_left_coordinate,
                            const glm::vec2& bottom_right_coordinate) :
     calculation_(Calculation(top_left_coordinate, bottom_right_coordinate)) {
@@ -47,30 +45,30 @@ void GasContainer::AdvanceOneFrame() {
   }
 
    // i colliding with wall
-  for (size_t i = 0; i < particle_.size(); ++i) {
+  for (auto & i : particle_) {
 
     // i collides with corner, calculates and updates new velocity
-    if (calculation_.CollideWithWall(particle_.at(i), 'x') &&
-        calculation_.CollideWithWall(particle_.at(i), 'y')) {
+    if (calculation_.CollideWithWall(i, 'x') &&
+        calculation_.CollideWithWall(i, 'y')) {
 
-      calculation_.PostWallCollisionVelocity(particle_.at(i), 'x');
-      calculation_.PostWallCollisionVelocity(particle_.at(i), 'y');
+      calculation_.PostWallCollisionVelocity(i, 'x');
+      calculation_.PostWallCollisionVelocity(i, 'y');
 
     // i collides with top or bottom wall of container
     // calculates and updates new velocity
-    } else if (calculation_.CollideWithWall(particle_.at(i), 'x')) {
-      calculation_.PostWallCollisionVelocity(particle_.at(i), 'x');
+    } else if (calculation_.CollideWithWall(i, 'x')) {
+      calculation_.PostWallCollisionVelocity(i, 'x');
 
     // i collides with left or right wall of container
     // calculates and updates new velocity
-    } else if (calculation_.CollideWithWall(particle_.at(i), 'y')) {
-      calculation_.PostWallCollisionVelocity(particle_.at(i), 'y');
+    } else if (calculation_.CollideWithWall(i, 'y')) {
+      calculation_.PostWallCollisionVelocity(i, 'y');
     }
   }
 
   // set resulting and updating velocity as new velocity of i
-  for (size_t i = 0; i < particle_.size(); ++i) {
-    calculation_.PostCollisionPosition(particle_[i]);
+  for (auto & i : particle_) {
+    calculation_.PostCollisionPosition(i);
   }
 }
 
