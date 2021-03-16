@@ -32,6 +32,7 @@ void GasContainer::AdvanceOneFrame() {
   // particle colliding with other particles
   for (size_t i = 0; i < particle_.size(); i++) {
     for (size_t j = i + 1; j < particle_.size(); j++) {
+
       // determines resulting velocity if i collides with another
       if (calculation_.CollideWithParticle(particle_.at(i), particle_.at(j))) {
 
@@ -40,15 +41,14 @@ void GasContainer::AdvanceOneFrame() {
 
         particle_[i].SetVelocity(velocity_1);
         particle_[j].SetVelocity(velocity_2);
-        // set resulting velocity as new velocity of i
-        //        calculation_.PostCollisionPosition(particle_.at(i));
-        //        calculation_.PostCollisionPosition(particle_.at(j));
+
       }
     }
   }
 
    // i colliding with wall
   for (size_t i = 0; i < particle_.size(); ++i) {
+
     // i collides with corner, calculates and updates new velocity
     if (calculation_.CollideWithWall(particle_.at(i), 'x') &&
         calculation_.CollideWithWall(particle_.at(i), 'y')) {
@@ -66,11 +66,9 @@ void GasContainer::AdvanceOneFrame() {
     } else if (calculation_.CollideWithWall(particle_.at(i), 'y')) {
       calculation_.PostWallCollisionVelocity(particle_.at(i), 'y');
     }
-
-    // updates new position after collision
-//    calculation_.PostCollisionPosition(particle_.at(i));
   }
 
+  // set resulting and updating velocity as new velocity of i
   for (size_t i = 0; i < particle_.size(); ++i) {
     calculation_.PostCollisionPosition(particle_[i]);
   }
