@@ -126,13 +126,13 @@ TEST_CASE("Particle not bouncing off of other particles due to moving in differe
 
 TEST_CASE("Particle bounces off of container wall") {
 
-  SECTION("Particle does not collide with left wall") {
+  SECTION("Particle does not collide with right wall") {
     Particle particle(1.0, 1.0, glm::vec2{198.9, 100.0}, glm::vec2{1.0, 0.0},
                       "pink");
     REQUIRE_FALSE(calculation.CollideWithWall(particle, 'y'));
   }
 
-  SECTION("Particle does not collide with right wall") {
+  SECTION("Particle does not collide with left wall") {
     Particle particle(1.0, 1.0, glm::vec2{1.1, 100.0}, glm::vec2{-1.0, 0.0},
                       "pink");
     REQUIRE_FALSE(calculation.CollideWithWall(particle, 'y'));
@@ -203,7 +203,7 @@ TEST_CASE("Particle bounces off of container wall") {
   }
 }
 
-TEST_CASE("Particle not bouncing off of container wall due to moving in different directions") {
+TEST_CASE("Particle not bouncing off of container wall when moving in different directions") {
 
   SECTION("Does not bounce off right wall") {
     Particle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{-1.0, 0.0},
