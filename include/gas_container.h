@@ -63,16 +63,16 @@ class GasContainer {
   const glm::vec2 kPinkInitialVelocity = {1.4,1.4}; // pink particle initial velocity
 
   // white particles attributes
-  const double kWhiteMass = 20.0; // white particle mass
-  const double kWhiteRadius = 20.0; // white particle radius
-  const ci::Color kWhiteColor = "white"; // white particle color
-  const glm::vec2 kWhiteInitialVelocity = {4.0, -4.0}; // white particle initial velocity
+  const double kTealMass = 20.0; // teal particle mass
+  const double kTealRadius = 20.0; // teal particle radius
+  const ci::Color kTealColor = "teal"; // teal particle color
+  const glm::vec2 kTealInitialVelocity = {4.0, -4.0}; // teal particle initial velocity
 
   // teal particles attributes
-  const double kTealMass = 30.0; // teal particle mass
-  const double kTealRadius = 30.0; // teal particle radius
-  const ci::Color kTealColor = "teal"; // teal particle color
-  const glm::vec2 kTealInitialVelocity = {6.0, 6.0}; // teal particle initial velocity
+  const double kWhiteMass = 30.0; // white particle mass
+  const double kWhiteRadius = 30.0; // white particle radius
+  const ci::Color kWhiteColor = "white"; // white particle color
+  const glm::vec2 kWhiteInitialVelocity = {6.0, 6.0}; // white particle initial velocity
 
   glm::vec2 top_left_coordinate_; // top left corner of container
   glm::vec2 bottom_right_coordinate_; // bottom right corner of container
