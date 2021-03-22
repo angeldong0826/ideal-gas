@@ -4,8 +4,7 @@
 namespace idealgas {
 
 GasContainer::GasContainer(const glm::vec2& top_left_coordinate,
-                           const glm::vec2& bottom_right_coordinate) :
-    calculation_(
+                           const glm::vec2& bottom_right_coordinate) : particle_manager(
           ParticleManager(top_left_coordinate, bottom_right_coordinate)) {
 
   top_left_coordinate_ = top_left_coordinate;
@@ -33,13 +32,13 @@ void GasContainer::AdvanceOneFrame() {
     for (size_t j = i + 1; j < particle_.size(); j++) {
 
       // determines resulting velocity if i collides with another
-      if (calculation_.IsParticleCollision(particle_.at(i), particle_.at(j))) {
+      if (particle_manager.IsParticleCollision(particle_.at(i), particle_.at(j))) {
 
         glm::vec2 velocity_1 =
-            calculation_.CalculatePostParticleCollisionVelocity(
+            particle_manager.CalculatePostParticleCollisionVelocity(
                 particle_.at(i), particle_.at(j));
         glm::vec2 velocity_2 =
-            calculation_.CalculatePostParticleCollisionVelocity(
+            particle_manager.CalculatePostParticleCollisionVelocity(
                 particle_.at(j), particle_.at(i));
 
         particle_[i].SetVelocity(velocity_1);
@@ -53,26 +52,26 @@ void GasContainer::AdvanceOneFrame() {
   for (auto & i : particle_) {
 
     // i collides with corner, calculates and updates new velocity
-    if (calculation_.IsWallCollision(i, 'x') &&
-        calculation_.IsWallCollision(i, 'y')) {
-      calculation_.CalculatePostWallCollisionVelocity(i, 'x');
-      calculation_.CalculatePostWallCollisionVelocity(i, 'y');
+    if (particle_manager.IsWallCollision(i, 'x') &&
+        particle_manager.IsWallCollision(i, 'y')) {
+      particle_manager.CalculatePostWallCollisionVelocity(i, 'x');
+      particle_manager.CalculatePostWallCollisionVelocity(i, 'y');
 
     // i collides with top or bottom wall of container
     // calculates and updates new velocity
-    } else if (calculation_.IsWallCollision(i, 'x')) {
-      calculation_.CalculatePostWallCollisionVelocity(i, 'x');
+    } else if (particle_manager.IsWallCollision(i, 'x')) {
+      particle_manager.CalculatePostWallCollisionVelocity(i, 'x');
 
     // i collides with left or right wall of container
     // calculates and updates new velocity
-    } else if (calculation_.IsWallCollision(i, 'y')) {
-      calculation_.CalculatePostWallCollisionVelocity(i, 'y');
+    } else if (particle_manager.IsWallCollision(i, 'y')) {
+      particle_manager.CalculatePostWallCollisionVelocity(i, 'y');
     }
   }
 
   // set resulting and updating velocity as new velocity of i
   for (auto & i : particle_) {
-    calculation_.CalculatePostCollisionPosition(i);
+    particle_manager.CalculatePostCollisionPosition(i);
   }
 }
 
@@ -91,7 +90,7 @@ void GasContainer::GenerateParticle() {
                                       bottom_right_coordinate_.x - kPinkRadius);
     double random_position_y_ = RandomNumberGenerator(top_left_coordinate_.y + kPinkRadius,
                                       bottom_right_coordinate_.y - kPinkRadius);
-    vec2 random_position_ = {random_position_x_, random_position_y_};
+    glm::vec2 random_position_ = {random_position_x_, random_position_y_};
 
   // generates new particle and adds to particle_ vector
     if (particle % 3 == 0) {
@@ -100,15 +99,20 @@ void GasContainer::GenerateParticle() {
       particle_.push_back(pink_particle);
 
     } else if (particle % 3 == 1) {
-      Particle purple_particle(kPurpleMass, kPurpleRadius, random_position_,
-                             kPurpleInitialVelocity, kPurpleColor);
+      Particle purple_particle(kWhiteMass, kWhiteRadius, random_position_,
+                               kWhiteInitialVelocity, kWhiteColor);
       particle_.push_back(purple_particle);
 
     } else if (particle % 3 == 2){
-      Particle orange_particle(kOrangeMass, kOrangeRadius, random_position_,
-                             kOrangeInitialVelocity, kOrangeColor);
+      std::cout << "here" << std::endl;
+      Particle teal_particle(kTealMass, kTealRadius, random_position_,
+                               kTealInitialVelocity, kTealColor);
     }
   }
+}
+
+const std::vector<Particle> GasContainer::GetParticles() const {
+  return particle_;
 }
 
 }  // namespace idealgas

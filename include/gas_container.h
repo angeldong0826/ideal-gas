@@ -1,10 +1,8 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
-#include "gas_particle.h"
+#include "particle.h"
 #include "particle_manager.h"
-
-using glm::vec2;
 
 namespace idealgas {
 
@@ -47,35 +45,40 @@ class GasContainer {
    */
   void GenerateParticle();
 
+  /**
+   * Getter method to retrieve vector of particles in container.
+   * @return vector of particles in container
+   */
+  const std::vector<Particle> GetParticles() const;
+
  private:
   // container attributes
-  const size_t border_width_ = 7; // border width of container
+  const size_t border_width_ = 5; // border width of container
   const size_t kParticleAmount = 30; // amount of particles in container
-
-  glm::vec2 top_left_coordinate_; // top left corner of container
-  glm::vec2 bottom_right_coordinate_; // bottom right corner of container
-
-  std::vector<Particle> particle_; // vector of particles in container
-  ParticleManager calculation_; // calculation purposes
-
 
   // pink particles attributes
   const double kPinkMass = 5.0; // pink particle mass
   const double kPinkRadius = 7.0; // pink particle radius
   const ci::Color kPinkColor = "pink"; // pink particle color (lol)
-  const glm::vec2 kPinkInitialVelocity = {1.0,1.0}; // pink particle initial velocity
+  const glm::vec2 kPinkInitialVelocity = {1.4,1.4}; // pink particle initial velocity
 
-  // purple particles attributes
-  const double kPurpleMass = 22.0;
-  const double kPurpleRadius = 22.0;
-  const ci::Color kPurpleColor = "purple";
-  const glm::vec2 kPurpleInitialVelocity = {10.5, -5.0};
+  // white particles attributes
+  const double kWhiteMass = 20.0; // white particle mass
+  const double kWhiteRadius = 20.0; // white particle radius
+  const ci::Color kWhiteColor = "white"; // white particle color
+  const glm::vec2 kWhiteInitialVelocity = {4.0, -4.0}; // white particle initial velocity
 
-  // orange particles attributes
-  const double kOrangeMass = 30.0;
-  const double kOrangeRadius = 30.0;
-  const ci::Color kOrangeColor = "orange";
-  const glm::vec2 kOrangeInitialVelocity = {-6.0, -0.6};
+  // teal particles attributes
+  const double kTealMass = 30.0; // teal particle mass
+  const double kTealRadius = 30.0; // teal particle radius
+  const ci::Color kTealColor = "teal"; // teal particle color
+  const glm::vec2 kTealInitialVelocity = {6.0, 6.0}; // teal particle initial velocity
+
+  glm::vec2 top_left_coordinate_; // top left corner of container
+  glm::vec2 bottom_right_coordinate_; // bottom right corner of container
+
+  std::vector<Particle> particle_; // vector of particles in container
+  ParticleManager particle_manager; // calculation purposes
 };
 
 }  // namespace idealgas

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
-#include "gas_particle.h"
+#include "particle.h"
 
 namespace idealgas {
 

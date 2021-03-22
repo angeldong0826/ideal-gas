@@ -24,10 +24,10 @@ class Particle {
            ci::Color color);
 
   // Getters
-  double GetMass();
+  double GetMass() const;
   double GetRadius() const;
   glm::vec2 GetPosition() const;
-  glm::vec2 GetVelocity();
+  glm::vec2 GetVelocity() const;
   ci::Color GetColor() const;
 
   // Setters

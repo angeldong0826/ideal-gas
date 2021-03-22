@@ -4,6 +4,7 @@
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
 #include "gas_container.h"
+#include "histogram.h"
 
 namespace idealgas {
 
@@ -31,8 +32,10 @@ class IdealGasApp : public ci::app::App {
   const size_t kWindowLength = 1300; // display window length
   const size_t kWindowWidth = 700; // display window width
   const size_t kMargin = 100; // display margin
+  const glm::vec2 kBottomRightCorner = {600, 600};
 
   GasContainer container_; // instance of container
+  Histogram histogram_; // instance of histogram
 };
 
 }  // namespace idealgas

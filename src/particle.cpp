@@ -1,4 +1,4 @@
-#include "gas_particle.h"
+#include "particle.h"
 
 namespace idealgas {
 
@@ -11,7 +11,7 @@ Particle::Particle(double mass, double radius, const glm::vec2 position, const g
 }
 
 // Getters
-double Particle::GetMass() {
+double Particle::GetMass() const {
   return mass_;
 }
 double Particle::GetRadius() const {
@@ -20,7 +20,7 @@ double Particle::GetRadius() const {
 glm::vec2 Particle::GetPosition() const {
   return position_;
 }
-glm::vec2 Particle::GetVelocity() {
+glm::vec2 Particle::GetVelocity() const {
   return velocity_;
 }
 ci::Color Particle::GetColor() const {
