@@ -6,6 +6,9 @@
 
 namespace idealgas {
 
+/**
+ * Class that creates particles to be used in simulation.
+ */
 class Particle {
  public:
   /**
@@ -17,7 +20,7 @@ class Particle {
    * @param velocity particle velocity as a vec2
    * @param color particle color as a Color
    **/
-  Particle(double mass, double radius, glm::vec2 position, glm::vec2 velocity,
+  Particle(double mass, double radius, const glm::vec2 position, const glm::vec2 velocity,
            ci::Color color);
 
   // Getters

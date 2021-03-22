@@ -4,7 +4,7 @@ namespace idealgas {
 
 IdealGasApp::IdealGasApp() :
   container_(GasContainer(glm::vec2 (kMargin, kMargin),
-             glm::vec2(kWindowLength - kMargin, kWindowWidth - kMargin))) {
+             glm::vec2(kMargin * 6, kMargin * 6))) {
 
   ci::app::setWindowSize(kWindowLength, kWindowWidth);
 }

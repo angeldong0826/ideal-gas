@@ -1,14 +1,15 @@
-#include "calculation.h"
+#include "particle_manager.h"
+
 #include <glm/vec2.hpp>
 
 namespace idealgas {
 
-Calculation::Calculation(const glm::vec2 top_left_, const glm::vec2 bottom_right_) {
+ParticleManager::ParticleManager(const glm::vec2 top_left_, const glm::vec2 bottom_right_) {
   top_left_coordinate_ = top_left_;
   bottom_right_coordinate_ = bottom_right_;
 }
 
-bool Calculation::CollideWithParticle(Particle particle, Particle target_particle) {
+bool ParticleManager::IsParticleCollision(Particle particle, Particle target_particle) const {
 
   // storing velocity and position difference as vectors
   glm::vec2 velocity_difference = particle.GetVelocity() - target_particle.GetVelocity();
@@ -24,7 +25,7 @@ bool Calculation::CollideWithParticle(Particle particle, Particle target_particl
   return false;
 }
 
-bool Calculation::CollideWithWall(Particle& particle, char axis) {
+bool ParticleManager::IsWallCollision(Particle particle, char axis) const { // change char to bool !!!!!
   // lower-cases all input axis
   char wall_direction = towlower(axis);
 
@@ -55,12 +56,12 @@ bool Calculation::CollideWithWall(Particle& particle, char axis) {
   return false;
 }
 
-void Calculation::PostCollisionPosition(Particle& particle) {
+void ParticleManager::CalculatePostCollisionPosition(Particle& particle) {
   // change in position = velocity * time
   particle.SetPosition(particle.GetPosition() + particle.GetVelocity());
 }
 
-glm::vec2 Calculation::PostParticleCollisionVelocity(Particle& particle, Particle& target_particle) {
+glm::vec2 ParticleManager::CalculatePostParticleCollisionVelocity(Particle& particle, Particle& target_particle) const {
 
   // Calculating the constant in the equation that calculates new particle
   // velocity after collision with another particle
@@ -77,7 +78,7 @@ glm::vec2 Calculation::PostParticleCollisionVelocity(Particle& particle, Particl
   return particle.GetVelocity() - resulting_velocity;
 }
 
-void Calculation::PostWallCollisionVelocity(Particle& particle, char axis) {
+void ParticleManager::CalculatePostWallCollisionVelocity(Particle& particle, char axis) {
 
   // Separate out x and y directions of input particle's velocity and store
   // them as doubles

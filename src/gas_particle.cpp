@@ -2,7 +2,7 @@
 
 namespace idealgas {
 
-Particle::Particle(double mass, double radius, glm::vec2 position, glm::vec2 velocity, ci::Color color) {
+Particle::Particle(double mass, double radius, const glm::vec2 position, const glm::vec2 velocity, ci::Color color) {
   mass_ = mass;
   radius_ = radius;
   position_ = position;
