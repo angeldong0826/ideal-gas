@@ -14,8 +14,10 @@ class Histogram {
  public:
   /**
    * Constructor that initializes histogram windows.
+   *
+   * @param references to particles in container as vector
    */
-  Histogram(const std::vector<Particle> &particles);
+  Histogram(const std::vector<Particle>& particles);
 
   /**
    * Displays the histogram windows.
@@ -28,22 +30,37 @@ class Histogram {
    */
   void AdvanceOneFrame();
 
+  /**
+   * Creates map to store chart info for particles.
+   */
   void CreateMap();
 
-  void FillInMap(std::map<double, int> &map, double speed,
-                 std::vector<double> &range);
+  /**
+   * Method to fill in histogram information into maps created.
+   *
+   * @param map to store histogram information
+   * @param speed of particles to be sorted
+   * @param range of velocities to be displayed
+   */
+  void FillInMap(std::map<double, int>& map, double speed,
+                 const std::vector<double>& range);
 
-  void DrawGraph(std::map<double, int> map, ci::Color color);
+  /**
+   * Method that draws histograms.
+   *
+   * @param map information to be displayed in histogram
+   * @param color of particle
+   */
+  void DrawGraph(std::map<double, int> map, const ci::Color& color);
 
  private:
-
-  // chart 1 attributes
+  // pink chart borders
   const ci::Rectf chart_pink_ =
       ci::Rectf(glm::vec2(700, 25), glm::vec2(1200, 225));
-  // chart 2 attributes
+  // white chart borders
   const ci::Rectf chart_white_ =
       ci::Rectf(glm::vec2(700, 250), glm::vec2(1200, 450));
-  // chart 3 attributes
+  // teal chart borders
   const ci::Rectf chart_teal_ =
       ci::Rectf(glm::vec2(700, 475), glm::vec2(1200, 675));
 
@@ -54,19 +71,19 @@ class Histogram {
   const glm::vec2 kTealInitialVelocity = {
       6.0, 6.0};  // teal particle initial velocity
 
-  double top_left_coordinate_ = chart_pink_.getUpperLeft().x;
-  double top_right_coordinate_ = chart_pink_.getUpperRight().x;
-  double pink_bottom_right_coordinate_ = chart_pink_.getLowerRight().y;
-  double white_bottom_right_coordinate_ = chart_white_.getLowerRight().y;
-  double teal_bottom_right_coordinate_ = chart_teal_.getLowerRight().y;
+  double top_left_coordinate_ = chart_pink_.getUpperLeft().x; // top left coordinate of all histogram charts
+  double top_right_coordinate_ = chart_pink_.getUpperRight().x; // top right coordinate of all histogram charts
+  double pink_bottom_right_coordinate_ = chart_pink_.getLowerRight().y; // bottom right coordinate of pink chart
+  double white_bottom_right_coordinate_ = chart_white_.getLowerRight().y; // bottom right coordinate of white chart
+  double teal_bottom_right_coordinate_ = chart_teal_.getLowerRight().y; // bottom right coordinate of teal chart
 
-  std::vector<Particle>& particles_;
+  std::vector<Particle>& particles_; // vector of particles in container
 
   std::map<double, int> map_pink_; // map for pink chart info
   std::map<double, int> map_white_; // map for white chart info
   std::map<double, int> map_teal_; // map for teal chart info
 
-  std::vector<double> pink_speed_range{
+  const std::vector<double> pink_speed_range{
       (glm::length(kPinkInitialVelocity) / 10),
       (glm::length(kPinkInitialVelocity) / 10) * 2,
       (glm::length(kPinkInitialVelocity) / 10) * 3,
@@ -78,7 +95,7 @@ class Histogram {
       (glm::length(kPinkInitialVelocity) / 10) * 9,
       (glm::length(kPinkInitialVelocity) / 10) * 10};
 
-  std::vector<double> white_speed_range{
+  const std::vector<double> white_speed_range{
       (glm::length(kWhiteInitialVelocity) / 10),
       (glm::length(kWhiteInitialVelocity) / 10) * 2,
       (glm::length(kWhiteInitialVelocity) / 10) * 3,
@@ -90,7 +107,7 @@ class Histogram {
       (glm::length(kWhiteInitialVelocity) / 10) * 9,
       (glm::length(kWhiteInitialVelocity) / 10) * 10};
 
-  std::vector<double> teal_speed_range{
+  const std::vector<double> teal_speed_range{
       (glm::length(kTealInitialVelocity) / 10),
       (glm::length(kTealInitialVelocity) / 10) * 2,
       (glm::length(kTealInitialVelocity) / 10) * 3,

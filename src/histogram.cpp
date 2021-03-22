@@ -42,8 +42,8 @@ void Histogram::CreateMap() {
   }
 }
 
-void Histogram::FillInMap(std::map<double, int> &map, double speed,
-                          vector<double> &range) {
+void Histogram::FillInMap(std::map<double, int>& map, double speed,
+                          const vector<double>& range) {
   for (size_t i = 0; i < range.size() - 1; i++) {
     if (speed < range[0]) {
       map[range[0]] += 1;
@@ -55,7 +55,7 @@ void Histogram::FillInMap(std::map<double, int> &map, double speed,
   }
 }
 
- void Histogram::DrawGraph(std::map<double, int> map, ci::Color color) {
+ void Histogram::DrawGraph(std::map<double, int> map, const ci::Color& color) {
    if (color == "pink") {
      ci::gl::color(color);
 
