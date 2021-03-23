@@ -32,14 +32,14 @@ void GasContainer::AdvanceOneFrame() {
   for (size_t i = 0; i < particle_.size(); i++) {
     for (size_t j = i + 1; j < particle_.size(); j++) {
       // determines resulting velocity if i collides with another
-      if (particle_manager.IsParticleCollision(particle_.at(i),
-                                               particle_.at(j))) {
+      if (particle_manager.IsParticleCollision(particle_[i],
+                                               particle_[j])) {
         glm::vec2 velocity_1 =
             particle_manager.CalculatePostParticleCollisionVelocity(
-                particle_.at(i), particle_.at(j));
+                particle_[i], particle_.at(j));
         glm::vec2 velocity_2 =
             particle_manager.CalculatePostParticleCollisionVelocity(
-                particle_.at(j), particle_.at(i));
+                particle_[j], particle_.at(i));
 
         particle_[i].SetVelocity(velocity_1);
         particle_[j].SetVelocity(velocity_2);
@@ -50,20 +50,20 @@ void GasContainer::AdvanceOneFrame() {
   // i colliding with wall
   for (auto& i : particle_) {
     // i collides with corner, calculates and updates new velocity
-    if (particle_manager.IsWallCollision(i, 'x') &&
-        particle_manager.IsWallCollision(i, 'y')) {
-      particle_manager.CalculatePostWallCollisionVelocity(i, 'x');
-      particle_manager.CalculatePostWallCollisionVelocity(i, 'y');
+    if (particle_manager.IsWallCollision(i, true) &&
+        particle_manager.IsWallCollision(i, false)) {
+      particle_manager.CalculatePostWallCollisionVelocity(i, true);
+      particle_manager.CalculatePostWallCollisionVelocity(i, false);
 
       // i collides with top or bottom wall of container
       // calculates and updates new velocity
-    } else if (particle_manager.IsWallCollision(i, 'x')) {
-      particle_manager.CalculatePostWallCollisionVelocity(i, 'x');
+    } else if (particle_manager.IsWallCollision(i, true)) {
+      particle_manager.CalculatePostWallCollisionVelocity(i, true);
 
       // i collides with left or right wall of container
       // calculates and updates new velocity
-    } else if (particle_manager.IsWallCollision(i, 'y')) {
-      particle_manager.CalculatePostWallCollisionVelocity(i, 'y');
+    } else if (particle_manager.IsWallCollision(i, false)) {
+      particle_manager.CalculatePostWallCollisionVelocity(i, false);
     }
   }
 

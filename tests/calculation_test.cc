@@ -3,7 +3,7 @@
 #include <catch2/catch.hpp>
 
 using idealgas::Particle;
-using idealgas::Particle;
+using idealgas::ParticleManager;
 
 glm::vec2 top_left_coordinate = {0.0, 0.0};
 glm::vec2 bottom_right_coordinate = {200.0, 200.0};

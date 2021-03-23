@@ -34,7 +34,7 @@ class IdealGasApp : public ci::app::App {
   const size_t kMargin = 100; // display margin
   const glm::vec2 kBottomRightCorner = {600, 600};
 
-  GasContainer container_; // instance of container
+  GasContainer container_ = GasContainer(glm::vec2 (kMargin, kMargin), kBottomRightCorner);
   Histogram histogram_; // instance of histogram
 };
 

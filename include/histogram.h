@@ -14,10 +14,8 @@ class Histogram {
  public:
   /**
    * Constructor that initializes histogram windows.
-   *
-   * @param references to particles in container as vector
    */
-  Histogram(const std::vector<Particle>& particles);
+  Histogram();
 
   /**
    * Displays the histogram windows.
@@ -28,7 +26,7 @@ class Histogram {
    * Updates the positions and velocities of all particles (based on the rules
    * described in the assignment documentation).
    */
-  void AdvanceOneFrame();
+  void AdvanceOneFrame(const std::vector<Particle>& particles);
 
   /**
    * Creates map to store chart info for particles.
@@ -48,10 +46,9 @@ class Histogram {
   /**
    * Method that draws histograms.
    *
-   * @param map information to be displayed in histogram
    * @param color of particle
    */
-  void DrawGraph(std::map<double, int> map, const ci::Color& color);
+  void DrawGraph(const ci::Color& color);
 
  private:
   // pink chart borders
@@ -71,55 +68,59 @@ class Histogram {
   const glm::vec2 kTealInitialVelocity = {
       6.0, 6.0};  // teal particle initial velocity
 
-  double top_left_coordinate_ = chart_pink_.getUpperLeft().x; // top left coordinate of all histogram charts
-  double top_right_coordinate_ = chart_pink_.getUpperRight().x; // top right coordinate of all histogram charts
-  double pink_bottom_right_coordinate_ = chart_pink_.getLowerRight().y; // bottom right coordinate of pink chart
-  double white_bottom_right_coordinate_ = chart_white_.getLowerRight().y; // bottom right coordinate of white chart
-  double teal_bottom_right_coordinate_ = chart_teal_.getLowerRight().y; // bottom right coordinate of teal chart
+  double top_left_x_coordinate_ = chart_pink_.getUpperLeft().x; // top left coordinate of all histogram charts
+  const double top_right_x_coordinate_ = chart_pink_.getUpperRight().x; // top right x coordinate of all histogram charts
+  const double top_right_y_coordinate_ = chart_pink_.getUpperRight().y; // top right y coordinate of all histogram charts
+  const double pink_bottom_right_coordinate_ = chart_pink_.getLowerRight().y; // bottom right coordinate of pink chart
+  const double white_bottom_right_coordinate_ = chart_white_.getLowerRight().y; // bottom right coordinate of white chart
+  const double teal_bottom_right_coordinate_ = chart_teal_.getLowerRight().y; // bottom right coordinate of teal chart
 
-  std::vector<Particle>& particles_; // vector of particles in container
+  std::vector<Particle> particles_; // vector of particles in container
+
+  const size_t x_axis_parts = 10; // number of parts to split x-axis into
+  const size_t kParticleAmount = 30; // amount of particles in container
+
+  const double x_scale_ = (top_right_x_coordinate_ - top_left_x_coordinate_) / x_axis_parts;
+  const double y_scale_ = (pink_bottom_right_coordinate_ - top_right_y_coordinate_) / (kParticleAmount / 3);
 
   std::map<double, int> map_pink_; // map for pink chart info
   std::map<double, int> map_white_; // map for white chart info
   std::map<double, int> map_teal_; // map for teal chart info
 
   const std::vector<double> pink_speed_range{
-      (glm::length(kPinkInitialVelocity) / 10),
-      (glm::length(kPinkInitialVelocity) / 10) * 2,
-      (glm::length(kPinkInitialVelocity) / 10) * 3,
-      (glm::length(kPinkInitialVelocity) / 10) * 4,
-      (glm::length(kPinkInitialVelocity) / 10) * 5,
-      (glm::length(kPinkInitialVelocity) / 10) * 6,
-      (glm::length(kPinkInitialVelocity) / 10) * 7,
-      (glm::length(kPinkInitialVelocity) / 10) * 8,
-      (glm::length(kPinkInitialVelocity) / 10) * 9,
-      (glm::length(kPinkInitialVelocity) / 10) * 10};
+      (glm::length(kPinkInitialVelocity) / x_axis_parts),
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 2,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 3,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 4,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 5,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 6,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 7,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 8,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 9,
+      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 10};
 
   const std::vector<double> white_speed_range{
-      (glm::length(kWhiteInitialVelocity) / 10),
-      (glm::length(kWhiteInitialVelocity) / 10) * 2,
-      (glm::length(kWhiteInitialVelocity) / 10) * 3,
-      (glm::length(kWhiteInitialVelocity) / 10) * 4,
-      (glm::length(kWhiteInitialVelocity) / 10) * 5,
-      (glm::length(kWhiteInitialVelocity) / 10) * 6,
-      (glm::length(kWhiteInitialVelocity) / 10) * 7,
-      (glm::length(kWhiteInitialVelocity) / 10) * 8,
-      (glm::length(kWhiteInitialVelocity) / 10) * 9,
-      (glm::length(kWhiteInitialVelocity) / 10) * 10};
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts),
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 2,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 3,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 4,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 5,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 6,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 7,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 8,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 9,
+      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 10};
 
   const std::vector<double> teal_speed_range{
-      (glm::length(kTealInitialVelocity) / 10),
-      (glm::length(kTealInitialVelocity) / 10) * 2,
-      (glm::length(kTealInitialVelocity) / 10) * 3,
-      (glm::length(kTealInitialVelocity) / 10) * 4,
-      (glm::length(kTealInitialVelocity) / 10) * 5,
-      (glm::length(kTealInitialVelocity) / 10) * 6,
-      (glm::length(kTealInitialVelocity) / 10) * 7,
-      (glm::length(kTealInitialVelocity) / 10) * 8,
-      (glm::length(kTealInitialVelocity) / 10) * 9,
-      (glm::length(kTealInitialVelocity) / 10) * 10};
-
-  const double x_scale_ = (top_right_coordinate_ - top_left_coordinate_) / pink_speed_range.size();
-  const double y_scale_ = particles_.size() / 3;
+      (glm::length(kTealInitialVelocity) / x_axis_parts),
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 2,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 3,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 4,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 5,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 6,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 7,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 8,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 9,
+      (glm::length(kTealInitialVelocity) / x_axis_parts) * 10};
 };
 }  // namespace idealgas

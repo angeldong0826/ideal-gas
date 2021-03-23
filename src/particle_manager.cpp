@@ -25,12 +25,10 @@ bool ParticleManager::IsParticleCollision(Particle particle, Particle target_par
   return false;
 }
 
-bool ParticleManager::IsWallCollision(Particle particle, char axis) const { // change char to bool !!!!!
-  // lower-cases all input axis
-  char wall_direction = towlower(axis);
+bool ParticleManager::IsWallCollision(Particle particle, bool axis) const {
 
   // if particle collides with top or bottom wall of container
-  if (wall_direction == 'x') {
+  if (axis) {
     if ((particle.GetVelocity().y < 0) && particle.GetPosition().y -
          particle.GetRadius() <= top_left_coordinate_.y) {
       return true;
@@ -43,7 +41,7 @@ bool ParticleManager::IsWallCollision(Particle particle, char axis) const { // c
   }
 
   // if particle collides with left or right wall of container
-  if (wall_direction == 'y') {
+  if (!axis) {
     if ((particle.GetVelocity().x < 0) && particle.GetPosition().x -
          particle.GetRadius() <= top_left_coordinate_.x) {
       return true;
@@ -78,22 +76,19 @@ glm::vec2 ParticleManager::CalculatePostParticleCollisionVelocity(Particle& part
   return particle.GetVelocity() - resulting_velocity;
 }
 
-void ParticleManager::CalculatePostWallCollisionVelocity(Particle& particle, char axis) {
+void ParticleManager::CalculatePostWallCollisionVelocity(Particle& particle, bool axis) {
 
   // Separate out x and y directions of input particle's velocity and store
   // them as doubles
   double x_velocity = particle.GetVelocity().x;
   double y_velocity = particle.GetVelocity().y;
 
-  // lower-case all input axis values
-  char wall_direction = towlower(axis);
-
   // if particle hits the left of right wall of container
-  if (wall_direction == 'y') {
+  if (!axis) {
     x_velocity *= -1;
   }
   // if particle hits the top or bottom wall of container
-  if (wall_direction == 'x') {
+  if (axis) {
     y_velocity *= -1;
   }
 

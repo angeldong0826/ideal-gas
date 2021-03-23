@@ -2,11 +2,7 @@
 
 namespace idealgas {
 
-IdealGasApp::IdealGasApp() :
-  container_(GasContainer(glm::vec2 (kMargin, kMargin),
-             kBottomRightCorner)),
-  histogram_(container_.GetParticles()){
-
+IdealGasApp::IdealGasApp() {
   ci::app::setWindowSize(kWindowLength, kWindowWidth);
 }
 
@@ -20,7 +16,7 @@ void IdealGasApp::draw() {
 
 void IdealGasApp::update() {
   container_.AdvanceOneFrame();
-  histogram_.AdvanceOneFrame();
+  histogram_.AdvanceOneFrame(container_.GetParticles());
 }
 
 }  // namespace idealgas

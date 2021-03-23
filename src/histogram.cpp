@@ -6,10 +6,7 @@ using std::vector;
 
 namespace idealgas {
 
-Histogram::Histogram(const std::vector<Particle> &particles)
-    : particles_(const_cast<std::vector<Particle> &>(particles)) {
-  particles_ = particles;
-}
+Histogram::Histogram() {}
 
 void Histogram::Display() {
   // Display chart outlines
@@ -19,16 +16,21 @@ void Histogram::Display() {
   ci::gl::drawStrokedRect(chart_teal_);
 
   // Display histograms
-  DrawGraph(map_pink_, ci::Color("pink"));
-  DrawGraph(map_white_, ci::Color("white"));
-  DrawGraph(map_teal_, ci::Color("teal"));
+  DrawGraph(ci::Color("pink"));
+  DrawGraph(ci::Color("white"));
+  DrawGraph(ci::Color("teal"));
 }
 
-void Histogram::AdvanceOneFrame() {
+void Histogram::AdvanceOneFrame(const std::vector<Particle> &particles) {
+  particles_ = particles;
   CreateMap();
 }
 
 void Histogram::CreateMap() {
+  map_pink_.clear();
+  map_white_.clear();
+  map_teal_.clear();
+
   for (auto &particle : particles_) {
     double speed = glm::length(particle.GetVelocity());
 
@@ -44,46 +46,67 @@ void Histogram::CreateMap() {
 
 void Histogram::FillInMap(std::map<double, int>& map, double speed,
                           const vector<double>& range) {
-  for (size_t i = 0; i < range.size() - 1; i++) {
-    if (speed < range[0]) {
-      map[range[0]] += 1;
-    } else if (speed >= range[i] && speed < range[i + 1]) {
-      map[range[i]] += 1;
-    } else if (speed >= range[i]) {
-      map[range[i + 1]] += 1;
-    }
+//  for (size_t i = 0; i < range.size() - 1; i++) {
+//    if (speed < range[0]) {
+//      map[range[0]] += 1;
+//    } else if (speed >= range[i] && speed < range[i + 1]) {
+//      map[range[i]] += 1;
+//    } else if (speed >= range[i]) {
+//      map[range[i + 1]] += 1;
+//    }
+//  }
+  if (speed <= range[0]) {
+    map[range[0]] += 1;
+  } else if (range[0] <= speed && speed < range[1]) {
+    map[range[1]] += 1;
+  } else if (range[1] <= speed && speed < range[2]) {
+    map[range[2]] += 1;
+  } else if (range[2] <= speed && speed < range[3]) {
+    map[range[3]] += 1;
+  } else if (range[3] <= speed && speed < range[4]) {
+    map[range[4]] += 1;
+  } else if (range[4] <= speed && speed < range[5]) {
+    map[range[5]] += 1;
+  } else if (range[5] <= speed && speed < range[6]) {
+    map[range[6]] += 1;
+  } else if (range[6] <= speed && speed < range[7]) {
+    map[range[7]] += 1;
+  } else if (range[7] <= speed && speed < range[8]) {
+    map[range[8]] += 1;
+  } else if (range[8] <= speed) {
+    map[range[9]] += 1;
   }
 }
 
- void Histogram::DrawGraph(std::map<double, int> map, const ci::Color& color) {
-   if (color == "pink") {
+ void Histogram::DrawGraph(const ci::Color& color) {
+   if (color == ci::Color("pink")) {
      ci::gl::color(color);
 
-     for (size_t i = 0; i < map_pink_.size(); i++) {
-       size_t amount = map_pink_.at(i);
-       ci::gl::drawSolidRect(ci::Rectf(glm::vec2 {top_left_coordinate_, pink_bottom_right_coordinate_ - amount * y_scale_},
-                                          glm::vec2 {top_left_coordinate_ + x_scale_, pink_bottom_right_coordinate_}));
-       top_left_coordinate_ += x_scale_;
+     for (const auto &item : map_pink_) {
+       size_t amount = item.second;
+       ci::gl::drawSolidRect(ci::Rectf(glm::vec2 {top_left_x_coordinate_, pink_bottom_right_coordinate_ - amount * y_scale_},
+                                          glm::vec2 {top_left_x_coordinate_ + x_scale_, pink_bottom_right_coordinate_}));
+       top_left_x_coordinate_ += x_scale_;
      }
 
-   } else if (color == "white") {
+   } else if (color == ci::Color("white")) {
      ci::gl::color(color);
 
-     for (size_t i = 0; i < map_white_.size(); i++) {
-       size_t amount = map_white_.at(i);
-       ci::gl::drawSolidRect(ci::Rectf(glm::vec2 {top_left_coordinate_, white_bottom_right_coordinate_ - amount * y_scale_},
-                                          glm::vec2 {top_left_coordinate_ + x_scale_, white_bottom_right_coordinate_}));
-       top_left_coordinate_ += x_scale_;
+     for (const auto &item : map_white_) {
+       size_t amount = item.second;
+       ci::gl::drawSolidRect(ci::Rectf(glm::vec2 {top_left_x_coordinate_, white_bottom_right_coordinate_ - amount * y_scale_},
+                                          glm::vec2 {top_left_x_coordinate_ + x_scale_, white_bottom_right_coordinate_}));
+       top_left_x_coordinate_ += x_scale_;
      }
 
-   } else if (color == "teal") {
+   } else if (color == ci::Color("teal")) {
      ci::gl::color(color);
 
-     for (size_t i = 0; i < map_teal_.size(); i++) {
-       size_t amount = map_teal_.at(i);
-       ci::gl::drawSolidRect(ci::Rectf(glm::vec2 {top_left_coordinate_, teal_bottom_right_coordinate_ - amount * y_scale_},
-                                       glm::vec2 {top_left_coordinate_ + x_scale_, teal_bottom_right_coordinate_}));
-       top_left_coordinate_ += x_scale_;
+     for (const auto &item : map_teal_) {
+       size_t amount = item.second;
+       ci::gl::drawSolidRect(ci::Rectf(glm::vec2 {top_left_x_coordinate_, teal_bottom_right_coordinate_ - amount * y_scale_},
+                                          glm::vec2 {top_left_x_coordinate_ + x_scale_, teal_bottom_right_coordinate_}));
+       top_left_x_coordinate_ += x_scale_;
      }
    }
  }

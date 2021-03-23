@@ -31,10 +31,10 @@ class ParticleManager {
    * Method that determines whether or not particle collides with wall.
    *
    * @param particle to be collided
-   * @param x or y direction of wall
+   * @param x or y direction of wall, x true y false
    * @return true if collided
    */
-  bool IsWallCollision(Particle particle, char axis) const;
+  bool IsWallCollision(Particle particle, bool axis) const;
 
   /**
    * Method that calculates new particle position after collision.
@@ -56,9 +56,9 @@ class ParticleManager {
    * Method that calculates velocity after particle-wall collision.
    *
    * @param particle collided
-   * @param axis wall that particle collide with
+   * @param axis wall that particle collide with, x true y false
    */
-  void CalculatePostWallCollisionVelocity(Particle& particle, char axis);
+  void CalculatePostWallCollisionVelocity(Particle& particle, bool axis);
 
  private:
   glm::vec2 top_left_coordinate_; // top left corner of container
