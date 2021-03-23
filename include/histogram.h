@@ -61,12 +61,19 @@ class Histogram {
   const ci::Rectf chart_teal_ =
       ci::Rectf(glm::vec2(700, 475), glm::vec2(1200, 675));
 
+//  const glm::vec2 kPinkInitialVelocity = {
+//      1.4, 1.4};  // pink particle initial velocity
+//  const glm::vec2 kWhiteInitialVelocity = {
+//      4.0, -4.0};  // white particle initial velocity
+//  const glm::vec2 kTealInitialVelocity = {
+//      6.0, 6.0};  // teal particle initial velocity
+
   const glm::vec2 kPinkInitialVelocity = {
-      1.4, 1.4};  // pink particle initial velocity
+      6.0, 6.0};  // pink particle initial velocity
   const glm::vec2 kWhiteInitialVelocity = {
       4.0, -4.0};  // white particle initial velocity
   const glm::vec2 kTealInitialVelocity = {
-      6.0, 6.0};  // teal particle initial velocity
+      1.4, 1.4};  // teal particle initial velocity
 
   double top_left_x_coordinate_ = chart_pink_.getUpperLeft().x; // top left coordinate of all histogram charts
   const double top_right_x_coordinate_ = chart_pink_.getUpperRight().x; // top right x coordinate of all histogram charts
