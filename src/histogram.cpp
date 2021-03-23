@@ -185,4 +185,5 @@ double Histogram::CalculateMaxSpeed() const {
   return max_speed_;
 }
 
+
 }  // namespace idealgas
