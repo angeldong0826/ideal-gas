@@ -28,44 +28,8 @@ void GasContainer::Display() const {
 }
 
 void GasContainer::AdvanceOneFrame() {
-  // particle colliding with other particles
-  for (size_t i = 0; i < particle_.size(); i++) {
-    for (size_t j = i + 1; j < particle_.size(); j++) {
-      // determines resulting velocity if i collides with another
-      if (particle_manager.IsParticleCollision(particle_[i],
-                                               particle_[j])) {
-        glm::vec2 velocity_1 =
-            particle_manager.CalculatePostParticleCollisionVelocity(
-                particle_[i], particle_.at(j));
-        glm::vec2 velocity_2 =
-            particle_manager.CalculatePostParticleCollisionVelocity(
-                particle_[j], particle_.at(i));
-
-        particle_[i].SetVelocity(velocity_1);
-        particle_[j].SetVelocity(velocity_2);
-      }
-    }
-  }
-
-  // i colliding with wall
-  for (auto& i : particle_) {
-    // i collides with corner, calculates and updates new velocity
-    if (particle_manager.IsWallCollision(i, true) &&
-        particle_manager.IsWallCollision(i, false)) {
-      particle_manager.CalculatePostWallCollisionVelocity(i, true);
-      particle_manager.CalculatePostWallCollisionVelocity(i, false);
-
-      // i collides with top or bottom wall of container
-      // calculates and updates new velocity
-    } else if (particle_manager.IsWallCollision(i, true)) {
-      particle_manager.CalculatePostWallCollisionVelocity(i, true);
-
-      // i collides with left or right wall of container
-      // calculates and updates new velocity
-    } else if (particle_manager.IsWallCollision(i, false)) {
-      particle_manager.CalculatePostWallCollisionVelocity(i, false);
-    }
-  }
+  particle_manager.CollidesWithParticle(particle_);
+  particle_manager.CollidesWithWall(particle_);
 
   // set resulting and updating velocity as new velocity of i
   for (auto& i : particle_) {
@@ -95,24 +59,24 @@ void GasContainer::GenerateParticle() {
 
     // generates new particle and adds to particle_ vector
     if (particle % 3 == 0) {
-      Particle pink_particle(kPinkMass, kPinkRadius, random_position_,
+      GasParticle pink_particle(kPinkMass, kPinkRadius, random_position_,
                              kPinkInitialVelocity, kPinkColor);
       particle_.push_back(pink_particle);
 
     } else if (particle % 3 == 1) {
-      Particle purple_particle(kWhiteMass, kWhiteRadius, random_position_,
+      GasParticle purple_particle(kWhiteMass, kWhiteRadius, random_position_,
                                kWhiteInitialVelocity, kWhiteColor);
       particle_.push_back(purple_particle);
 
     } else if (particle % 3 == 2) {
-      Particle teal_particle(kTealMass, kTealRadius, random_position_,
+      GasParticle teal_particle(kTealMass, kTealRadius, random_position_,
                              kTealInitialVelocity, kTealColor);
       particle_.push_back(teal_particle);
     }
   }
 }
 
-std::vector<Particle> GasContainer::GetParticles() const {
+std::vector<GasParticle> GasContainer::GetParticles() const {
   return particle_;
 }
 

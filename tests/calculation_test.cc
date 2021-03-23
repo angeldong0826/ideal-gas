@@ -2,263 +2,263 @@
 
 #include <catch2/catch.hpp>
 
-using idealgas::Particle;
+using idealgas::GasParticle;
 using idealgas::ParticleManager;
 
 glm::vec2 top_left_coordinate = {0.0, 0.0};
 glm::vec2 bottom_right_coordinate = {200.0, 200.0};
 ParticleManager calculation(top_left_coordinate, bottom_right_coordinate);
 
-TEST_CASE("Particle bounces off of other particles") {
+TEST_CASE("GasParticle bounces off of other particles") {
 
   // set particles with specific characteristics for testing convenience
-  Particle particle_moving_right(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_right(1.0, 1.0, glm::vec2{100.0, 100.0},
                                  glm::vec2{1.0, 0.0}, "pink");
-  Particle particle_moving_left(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_left(1.0, 1.0, glm::vec2{100.0, 100.0},
                                 glm::vec2{-1.0, 0.0}, "pink");
-  Particle particle_moving_up(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_up(1.0, 1.0, glm::vec2{100.0, 100.0},
                               glm::vec2{0.0, 1.0}, "pink");
-  Particle particle_moving_down(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_down(1.0, 1.0, glm::vec2{100.0, 100.0},
                                 glm::vec2{0.0, -1.0}, "pink");
-  Particle particle_moving_diagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_diagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
                                       glm::vec2{1.0, 1.0}, "pink");
-  Particle particle_moving_antidiagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_antidiagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
                                           glm::vec2{-1.0, -1.0}, "pink");
 
   SECTION("Collision from right") {
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
                              glm::vec2{-1.0, 0}, "pink");
     REQUIRE(calculation.IsParticleCollision(particle_moving_right,
                                             target_particle));
   }
 
   SECTION("Collision from left") {
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
                              glm::vec2{1.0, 0}, "pink");
     REQUIRE(
         calculation.IsParticleCollision(particle_moving_left, target_particle));
   }
 
   SECTION("Collision from top") {
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
                              glm::vec2{0.0, -1.0}, "pink");
     REQUIRE(
         calculation.IsParticleCollision(particle_moving_up, target_particle));
   }
 
   SECTION("Collision from bottom") {
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
                              glm::vec2{0.0, 1.0}, "pink");
     REQUIRE(
         calculation.IsParticleCollision(particle_moving_down, target_particle));
   }
 
   SECTION("Diagonal collision") {
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 101.0},
                              glm::vec2{-1.0, -1.0}, "pink");
     REQUIRE(calculation.IsParticleCollision(particle_moving_diagonally,
                                             target_particle));
   }
 
   SECTION("Anti-diagonal collision") {
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 99.0},
                              glm::vec2{1.0, 1.0}, "pink");
     REQUIRE(calculation.IsParticleCollision(particle_moving_antidiagonally,
                                             target_particle));
   }
 }
 
-TEST_CASE("Particle not bouncing off of other particles when not moving towards each other") {
+TEST_CASE("GasParticle not bouncing off of other particles when not moving towards each other") {
 
   // middle particle at the center of container for testing convenience
-  Particle middle_particle(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle middle_particle(1.0, 1.0, glm::vec2{100.0, 100.0},
                            glm::vec2{0.0, 0.0}, "pink");
 
   SECTION("Does not bounce from right") {
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
                              glm::vec2{1.0, 0.0}, "pink");
     REQUIRE_FALSE(
         calculation.IsParticleCollision(middle_particle, target_particle));
   }
 
   SECTION("Does not bounce from left") {
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
                              glm::vec2{-1.0, 0.0}, "pink");
     REQUIRE_FALSE(
         calculation.IsParticleCollision(middle_particle, target_particle));
   }
 
   SECTION("Does not bounce from top") {
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
                              glm::vec2{0.0, -1.0}, "pink");
     REQUIRE_FALSE(
         calculation.IsParticleCollision(middle_particle, target_particle));
   }
 
   SECTION("Does not bounce from bottom") {
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
                              glm::vec2{0.0, 1.0}, "pink");
     REQUIRE_FALSE(
         calculation.IsParticleCollision(middle_particle, target_particle));
   }
 
   SECTION("Does not bounce diagonally") {
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 99.0},
                              glm::vec2{1.0, -1.0}, "pink");
     REQUIRE_FALSE(
         calculation.IsParticleCollision(middle_particle, target_particle));
   }
 
   SECTION("Does not bounce anti-diagonally") {
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 101.0},
                              glm::vec2{-1.0, 1.0}, "pink");
     REQUIRE_FALSE(
         calculation.IsParticleCollision(middle_particle, target_particle));
   }
 
   SECTION("Does not bounce when still") {
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
                              glm::vec2{0.0, 0.0}, "pink");
     REQUIRE_FALSE(
         calculation.IsParticleCollision(middle_particle, target_particle));
   }
 }
 
-TEST_CASE("Particle bounces off of container wall") {
+TEST_CASE("GasParticle bounces off of container wall") {
 
-  SECTION("Particle does not collide with right wall") {
-    Particle particle(1.0, 1.0, glm::vec2{198.9, 100.0}, glm::vec2{1.0, 0.0},
+  SECTION("GasParticle does not collide with right wall") {
+    GasParticle particle(1.0, 1.0, glm::vec2{198.9, 100.0}, glm::vec2{1.0, 0.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
-  SECTION("Particle does not collide with left wall") {
-    Particle particle(1.0, 1.0, glm::vec2{1.1, 100.0}, glm::vec2{-1.0, 0.0},
+  SECTION("GasParticle does not collide with left wall") {
+    GasParticle particle(1.0, 1.0, glm::vec2{1.1, 100.0}, glm::vec2{-1.0, 0.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
-  SECTION("Particle does not collide with top wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 198.9}, glm::vec2{0.0, 1.0},
+  SECTION("GasParticle does not collide with top wall") {
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 198.9}, glm::vec2{0.0, 1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
   }
 
-  SECTION("Particle does not collide with bottom wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 198.9}, glm::vec2{0.0, -1.0},
+  SECTION("GasParticle does not collide with bottom wall") {
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 198.9}, glm::vec2{0.0, -1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
   }
 
   SECTION("Right wall collision") {
-    Particle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{1.0, 0.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Left wall collision") {
-    Particle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{-1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{-1.0, 0.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Top wall collision") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 0.9}, glm::vec2{0.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 0.9}, glm::vec2{0.0, -1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
   }
 
   SECTION("Bottom wall collision") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 199.1}, glm::vec2{0.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 199.1}, glm::vec2{0.0, 1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
   }
 
   SECTION("Top right corner collision") {
-    Particle particle(1.0, 1.0, glm::vec2{200.0, 0.0}, glm::vec2{1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{200.0, 0.0}, glm::vec2{1.0, -1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Top left corner collision") {
-    Particle particle(1.0, 1.0, glm::vec2{0.0, 0.0}, glm::vec2{-1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{0.0, 0.0}, glm::vec2{-1.0, -1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Bottom right corner collision") {
-    Particle particle(1.0, 1.0, glm::vec2{200.0, 200.0}, glm::vec2{1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{200.0, 200.0}, glm::vec2{1.0, 1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Bottom left corner collision") {
-    Particle particle(1.0, 1.0, glm::vec2{0.0, 200.0}, glm::vec2{-1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{0.0, 200.0}, glm::vec2{-1.0, 1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
   }
 }
 
-TEST_CASE("Particle not bouncing off of container wall when moving in different directions") {
+TEST_CASE("GasParticle not bouncing off of container wall when moving in different directions") {
 
   SECTION("Does not bounce off right wall") {
-    Particle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{-1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{-1.0, 0.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Does not bounce off left wall") {
-    Particle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{1.0, 0.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Does not bounce off top wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 1.0}, glm::vec2{0.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 1.0}, glm::vec2{0.0, 1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
   }
 
   SECTION("Does not bounce off bottom wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 199.0}, glm::vec2{0.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 199.0}, glm::vec2{0.0, -1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
   }
 
   SECTION("Does not bounce off top right corner") {
-    Particle particle(1.0, 1.0, glm::vec2{199.0, 1.0}, glm::vec2{-1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{199.0, 1.0}, glm::vec2{-1.0, 1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Does not bounce off top left corner") {
-    Particle particle(1.0, 1.0, glm::vec2{1.0, 1.0}, glm::vec2{1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{1.0, 1.0}, glm::vec2{1.0, 1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Does not bounce off bottom right corner") {
-    Particle particle(1.0, 1.0, glm::vec2{199.0, 199.0}, glm::vec2{-1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{199.0, 199.0}, glm::vec2{-1.0, -1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Does not bounce off bottom left corner") {
-    Particle particle(1.0, 1.0, glm::vec2{1.0, 199.0}, glm::vec2{1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{1.0, 199.0}, glm::vec2{1.0, -1.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
   }
 
   SECTION("Does not bounce off when still") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 100.0}, glm::vec2{0.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 100.0}, glm::vec2{0.0, 0.0},
                       "pink");
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE_FALSE(calculation.IsWallCollision(particle, 'y'));
@@ -268,9 +268,9 @@ TEST_CASE("Particle not bouncing off of container wall when moving in different 
 TEST_CASE("Velocity update after particle-particle collision") {
 
   SECTION("Collision from right") {
-    Particle particle_moving_right(1.0, 1.0, glm::vec2{100.0, 100.0},
+    GasParticle particle_moving_right(1.0, 1.0, glm::vec2{100.0, 100.0},
                                    glm::vec2{1.0, 0.0}, "pink");
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
                              glm::vec2{-1.0, 0}, "pink");
     REQUIRE(calculation.IsParticleCollision(particle_moving_right,
                                             target_particle));
@@ -289,9 +289,9 @@ TEST_CASE("Velocity update after particle-particle collision") {
   }
 
   SECTION("Collision from left") {
-    Particle particle_moving_left(1.0, 1.0, glm::vec2{100.0, 100.0},
+    GasParticle particle_moving_left(1.0, 1.0, glm::vec2{100.0, 100.0},
                                   glm::vec2{-1.0, 0.0}, "pink");
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
                              glm::vec2{1.0, 0}, "pink");
     REQUIRE(
         calculation.IsParticleCollision(particle_moving_left, target_particle));
@@ -310,9 +310,9 @@ TEST_CASE("Velocity update after particle-particle collision") {
   }
 
   SECTION("Collision from top") {
-    Particle particle_moving_up(1.0, 1.0, glm::vec2{100.0, 100.0},
+    GasParticle particle_moving_up(1.0, 1.0, glm::vec2{100.0, 100.0},
                                 glm::vec2{0.0, 1.0}, "pink");
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
                              glm::vec2{0.0, -1.0}, "pink");
     REQUIRE(
         calculation.IsParticleCollision(particle_moving_up, target_particle));
@@ -331,9 +331,9 @@ TEST_CASE("Velocity update after particle-particle collision") {
   }
 
   SECTION("Collision from bottom") {
-    Particle particle_moving_down(1.0, 1.0, glm::vec2{100.0, 100.0},
+    GasParticle particle_moving_down(1.0, 1.0, glm::vec2{100.0, 100.0},
                                   glm::vec2{0.0, -1.0}, "pink");
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
                              glm::vec2{0.0, 1.0}, "pink");
     REQUIRE(
         calculation.IsParticleCollision(particle_moving_down, target_particle));
@@ -352,9 +352,9 @@ TEST_CASE("Velocity update after particle-particle collision") {
   }
 
   SECTION("Diagonal collision") {
-    Particle particle_moving_diagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
+    GasParticle particle_moving_diagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
                                         glm::vec2{1.0, 1.0}, "pink");
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 101.0},
                              glm::vec2{-1.0, -1.0}, "pink");
     REQUIRE(calculation.IsParticleCollision(particle_moving_diagonally,
                                             target_particle));
@@ -373,9 +373,9 @@ TEST_CASE("Velocity update after particle-particle collision") {
   }
 
   SECTION("Anti-diagonal collision") {
-    Particle particle_moving_antidiagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
+    GasParticle particle_moving_antidiagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
                                             glm::vec2{-1.0, -1.0}, "pink");
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 99.0},
                              glm::vec2{1.0, 1.0}, "pink");
     REQUIRE(calculation.IsParticleCollision(particle_moving_antidiagonally,
                                             target_particle));
@@ -397,21 +397,21 @@ TEST_CASE("Velocity update after particle-particle collision") {
 TEST_CASE("Position update after particle-particle collision") {
 
   // set particles with specific characteristics for testing convenience
-  Particle particle_moving_right(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_right(1.0, 1.0, glm::vec2{100.0, 100.0},
                                  glm::vec2{1.0, 0.0}, "pink");
-  Particle particle_moving_left(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_left(1.0, 1.0, glm::vec2{100.0, 100.0},
                                 glm::vec2{-1.0, 0.0}, "pink");
-  Particle particle_moving_up(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_up(1.0, 1.0, glm::vec2{100.0, 100.0},
                               glm::vec2{0.0, 1.0}, "pink");
-  Particle particle_moving_down(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_down(1.0, 1.0, glm::vec2{100.0, 100.0},
                                 glm::vec2{0.0, -1.0}, "pink");
-  Particle particle_moving_diagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_diagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
                                       glm::vec2{1.0, 1.0}, "pink");
-  Particle particle_moving_antidiagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
+  GasParticle particle_moving_antidiagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
                                           glm::vec2{-1.0, -1.0}, "pink");
 
   SECTION("Collision from right") {
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 100.0},
                              glm::vec2{-1.0, 0}, "pink");
 
     // checks to make sure there is collision
@@ -437,7 +437,7 @@ TEST_CASE("Position update after particle-particle collision") {
   }
 
   SECTION("Collision from left") {
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 100.0},
                              glm::vec2{1.0, 0}, "pink");
 
     // checks to make sure there is collision
@@ -463,7 +463,7 @@ TEST_CASE("Position update after particle-particle collision") {
   }
 
   SECTION("Collision from top") {
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 101.0},
                              glm::vec2{0.0, -1.0}, "pink");
 
     // checks to make sure there is collision
@@ -489,7 +489,7 @@ TEST_CASE("Position update after particle-particle collision") {
   }
 
   SECTION("Collision from bottom") {
-    Particle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{100.0, 99.0},
                              glm::vec2{0.0, 1.0}, "pink");
 
     // checks to make sure there is collision
@@ -515,7 +515,7 @@ TEST_CASE("Position update after particle-particle collision") {
   }
 
   SECTION("Diagonal collision") {
-    Particle target_particle(1.0, 1.0, glm::vec2{101.0, 101.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{101.0, 101.0},
                              glm::vec2{-1.0, -1.0}, "pink");
 
     // checks to make sure there is collision
@@ -541,7 +541,7 @@ TEST_CASE("Position update after particle-particle collision") {
   }
 
   SECTION("Anti-diagonal collision") {
-    Particle target_particle(1.0, 1.0, glm::vec2{99.0, 99.0},
+    GasParticle target_particle(1.0, 1.0, glm::vec2{99.0, 99.0},
                              glm::vec2{1.0, 1.0}, "pink");
 
     // checks to make sure there is collision
@@ -569,7 +569,7 @@ TEST_CASE("Position update after particle-particle collision") {
 
 TEST_CASE("Velocity update after particle-wall collision") {
   SECTION("Collision with top wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 0.9}, glm::vec2{0.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 0.9}, glm::vec2{0.0, -1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
 
@@ -579,7 +579,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
   }
 
   SECTION("Collision with bottom wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 199.1}, glm::vec2{0.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 199.1}, glm::vec2{0.0, 1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
 
@@ -589,7 +589,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
   }
 
   SECTION("Collision with right wall") {
-    Particle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{1.0, 0.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
 
@@ -599,7 +599,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
   }
 
   SECTION("Collision with left wall") {
-    Particle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{-1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{-1.0, 0.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
 
@@ -609,7 +609,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
   }
 
   SECTION("Collision with top left corner") {
-    Particle particle(1.0, 1.0, glm::vec2{0.0, 0.0}, glm::vec2{-1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{0.0, 0.0}, glm::vec2{-1.0, -1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
@@ -621,7 +621,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
   }
 
   SECTION("Collision with top right corner") {
-    Particle particle(1.0, 1.0, glm::vec2{200.0, 0.0}, glm::vec2{1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{200.0, 0.0}, glm::vec2{1.0, -1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
@@ -633,7 +633,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
   }
 
   SECTION("Collision with bottom left corner") {
-    Particle particle(1.0, 1.0, glm::vec2{0.0, 200.0}, glm::vec2{-1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{0.0, 200.0}, glm::vec2{-1.0, 1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
@@ -645,7 +645,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
   }
 
   SECTION("Collision with bottom right corner") {
-    Particle particle(1.0, 1.0, glm::vec2{200.0, 200.0}, glm::vec2{1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{200.0, 200.0}, glm::vec2{1.0, 1.0},
                       "pink");
     REQUIRE(calculation.IsWallCollision(particle, 'x'));
     REQUIRE(calculation.IsWallCollision(particle, 'y'));
@@ -659,7 +659,7 @@ TEST_CASE("Velocity update after particle-wall collision") {
 
 TEST_CASE("Position update after particle-wall collision") {
   SECTION("Collision with top wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 0.9}, glm::vec2{0.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 0.9}, glm::vec2{0.0, -1.0},
                       "pink");
 
     // checks to make sure there is collision
@@ -677,7 +677,7 @@ TEST_CASE("Position update after particle-wall collision") {
   }
 
   SECTION("Collision with bottom wall") {
-    Particle particle(1.0, 1.0, glm::vec2{100.0, 199.1}, glm::vec2{0.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{100.0, 199.1}, glm::vec2{0.0, 1.0},
                       "pink");
 
     // checks to make sure there is collision
@@ -695,7 +695,7 @@ TEST_CASE("Position update after particle-wall collision") {
   }
 
   SECTION("Collision with right wall") {
-    Particle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{199.0, 100.0}, glm::vec2{1.0, 0.0},
                       "pink");
 
     // checks to make sure there is collision
@@ -713,7 +713,7 @@ TEST_CASE("Position update after particle-wall collision") {
   }
 
   SECTION("Collision with left wall") {
-    Particle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{-1.0, 0.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{1.0, 100.0}, glm::vec2{-1.0, 0.0},
                       "pink");
 
     // checks to make sure there is collision
@@ -731,7 +731,7 @@ TEST_CASE("Position update after particle-wall collision") {
   }
 
   SECTION("Collision with top left corner") {
-    Particle particle(1.0, 1.0, glm::vec2{0.0, 0.0}, glm::vec2{-1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{0.0, 0.0}, glm::vec2{-1.0, -1.0},
                       "pink");
 
     // checks to make sure there is collision
@@ -751,7 +751,7 @@ TEST_CASE("Position update after particle-wall collision") {
   }
 
   SECTION("Collision with top right corner") {
-    Particle particle(1.0, 1.0, glm::vec2{200.0, 0.0}, glm::vec2{1.0, -1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{200.0, 0.0}, glm::vec2{1.0, -1.0},
                       "pink");
 
     // checks to make sure there is collision
@@ -771,7 +771,7 @@ TEST_CASE("Position update after particle-wall collision") {
   }
 
   SECTION("Collision with bottom left corner") {
-    Particle particle(1.0, 1.0, glm::vec2{0.0, 200.0}, glm::vec2{-1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{0.0, 200.0}, glm::vec2{-1.0, 1.0},
                       "pink");
 
     // checks to make sure there is collision
@@ -791,7 +791,7 @@ TEST_CASE("Position update after particle-wall collision") {
   }
 
   SECTION("Collision with bottom right corner") {
-    Particle particle(1.0, 1.0, glm::vec2{200.0, 200.0}, glm::vec2{1.0, 1.0},
+    GasParticle particle(1.0, 1.0, glm::vec2{200.0, 200.0}, glm::vec2{1.0, 1.0},
                       "pink");
 
     // checks to make sure there is collision

@@ -21,7 +21,7 @@ void Histogram::Display() {
   DrawGraph(ci::Color("teal"));
 }
 
-void Histogram::AdvanceOneFrame(const std::vector<Particle> &particles) {
+void Histogram::AdvanceOneFrame(const std::vector<GasParticle> &particles) {
   particles_ = particles;
   CreateMap();
 }

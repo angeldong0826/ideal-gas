@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
-#include "particle.h"
+#include "gas_particle.h"
 #include "particle_manager.h"
 
 namespace idealgas {
@@ -49,7 +49,7 @@ class GasContainer {
    * Getter method to retrieve vector of particles in container.
    * @return vector of particles in container
    */
-  std::vector<Particle> GetParticles() const ;
+  std::vector<GasParticle> GetParticles() const ;
 
 //  /**
 //   * Getter method to retrieve pink particles' initial velocity.
@@ -98,7 +98,7 @@ class GasContainer {
   glm::vec2 top_left_coordinate_; // top left corner of container
   glm::vec2 bottom_right_coordinate_; // bottom right corner of container
 
-  std::vector<Particle> particle_; // vector of particles in container
+  std::vector<GasParticle> particle_; // vector of particles in container
   ParticleManager particle_manager; // calculation purposes
 };
 

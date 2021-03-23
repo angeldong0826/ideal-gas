@@ -1,8 +1,8 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
-#include "particle.h"
 #include "gas_container.h"
+#include "gas_particle.h"
 
 namespace idealgas {
 
@@ -27,7 +27,7 @@ class Histogram {
    * Updates the positions and velocities of all particles (based on the rules
    * described in the assignment documentation).
    */
-  void AdvanceOneFrame(const std::vector<Particle>& particles);
+  void AdvanceOneFrame(const std::vector<GasParticle>& particles);
 
   /**
    * Creates map to store chart info for particles.
@@ -76,7 +76,7 @@ class Histogram {
   const double white_bottom_right_coordinate_ = chart_white_.getLowerRight().y; // bottom right coordinate of white chart
   const double teal_bottom_right_coordinate_ = chart_teal_.getLowerRight().y; // bottom right coordinate of teal chart
 
-  std::vector<Particle> particles_; // vector of particles in container
+  std::vector<GasParticle> particles_; // vector of particles in container
 
   const size_t x_axis_parts = 10; // number of parts to split x-axis into
   const size_t kParticleAmount = 30; // amount of particles in container
