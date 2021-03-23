@@ -29,13 +29,17 @@ class IdealGasApp : public ci::app::App {
   void update() override;
 
  private:
-  const size_t kWindowLength = 1300; // display window length
-  const size_t kWindowWidth = 700; // display window width
-  const size_t kMargin = 100; // display margin
-  const glm::vec2 kBottomRightCorner = {600, 600};
+  const size_t kWindowLength = 1300;    // display window length
+  const size_t kWindowWidth = 700;      // display window width
+  const size_t kContainerMargin = 100;  // container margin
+  const glm::vec2 kContainerBottomRightCorner = {
+      kWindowLength / 2 - kContainerMargin / 2,
+      kWindowWidth - kContainerMargin};  // bottom right corner of container
 
-  GasContainer container_ = GasContainer(glm::vec2 (kMargin, kMargin), kBottomRightCorner);
-  Histogram histogram_; // instance of histogram
+  GasContainer container_ =
+      GasContainer(glm::vec2(kContainerMargin, kContainerMargin),
+                   kContainerBottomRightCorner);  // instance of container
+  Histogram histogram_;
 };
 
 }  // namespace idealgas

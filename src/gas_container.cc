@@ -46,7 +46,7 @@ size_t GasContainer::RandomNumberGenerator(size_t lower_bound,
 }
 
 void GasContainer::GenerateParticle() {
-  for (size_t particle = 0; particle < kParticleAmount; particle++) {
+  for (size_t particle = 0; particle < kParticleAmount; ++particle) {
     // generates random position for spawning
 
     double random_position_x_ =
@@ -60,17 +60,17 @@ void GasContainer::GenerateParticle() {
     // generates new particle and adds to particle_ vector
     if (particle % 3 == 0) {
       GasParticle pink_particle(kPinkMass, kPinkRadius, random_position_,
-                             kPinkInitialVelocity, kPinkColor);
+                                kPinkInitialVelocity, kPinkColor);
       particle_.push_back(pink_particle);
 
     } else if (particle % 3 == 1) {
       GasParticle purple_particle(kWhiteMass, kWhiteRadius, random_position_,
-                               kWhiteInitialVelocity, kWhiteColor);
+                                  kWhiteInitialVelocity, kWhiteColor);
       particle_.push_back(purple_particle);
 
     } else if (particle % 3 == 2) {
       GasParticle teal_particle(kTealMass, kTealRadius, random_position_,
-                             kTealInitialVelocity, kTealColor);
+                                kTealInitialVelocity, kTealColor);
       particle_.push_back(teal_particle);
     }
   }
@@ -79,17 +79,5 @@ void GasContainer::GenerateParticle() {
 std::vector<GasParticle> GasContainer::GetParticles() const {
   return particle_;
 }
-
-//glm::vec2 GasContainer::GetPinkInitialVelocity() const {
-//  return kPinkInitialVelocity;
-//}
-//
-//glm::vec2 GasContainer::GetTealInitialVelocity() const {
-//  return kTealInitialVelocity;
-//}
-//
-//glm::vec2 GasContainer::GetWhiteInitialVelocity() const {
-//  return kWhiteInitialVelocity;
-//}
 
 }  // namespace idealgas

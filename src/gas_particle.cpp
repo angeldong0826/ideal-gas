@@ -2,7 +2,8 @@
 
 namespace idealgas {
 
-GasParticle::GasParticle(double mass, double radius, const glm::vec2 position, const glm::vec2 velocity, ci::Color color) {
+GasParticle::GasParticle(double mass, double radius, const glm::vec2 position,
+                         const glm::vec2 velocity, ci::Color color) {
   mass_ = mass;
   radius_ = radius;
   position_ = position;
@@ -35,4 +36,4 @@ void GasParticle::SetVelocity(glm::vec2 velocity) {
   velocity_ = velocity;
 }
 
-} // namespace idealgas
+}  // namespace idealgas

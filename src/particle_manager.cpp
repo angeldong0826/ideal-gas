@@ -4,21 +4,23 @@
 
 namespace idealgas {
 
-ParticleManager::ParticleManager(const glm::vec2 top_left_, const glm::vec2 bottom_right_) {
+ParticleManager::ParticleManager(const glm::vec2& top_left_,
+                                 const glm::vec2& bottom_right_) {
   top_left_coordinate_ = top_left_;
   bottom_right_coordinate_ = bottom_right_;
 }
 
 bool ParticleManager::IsParticleCollision(GasParticle& particle,
                                           GasParticle& target_particle) const {
-
   // storing velocity and position difference as vectors
-  glm::vec2 velocity_difference = particle.GetVelocity() - target_particle.GetVelocity();
-  glm::vec2 position_difference = particle.GetPosition() - target_particle.GetPosition();
+  glm::vec2 velocity_difference =
+      particle.GetVelocity() - target_particle.GetVelocity();
+  glm::vec2 position_difference =
+      particle.GetPosition() - target_particle.GetPosition();
 
   // conditions to meet to determine if particles have collided with each other
   if (((glm::distance(particle.GetPosition(), target_particle.GetPosition())) <=
-      (particle.GetRadius() + target_particle.GetRadius())) &&
+       (particle.GetRadius() + target_particle.GetRadius())) &&
       (glm::dot(velocity_difference, position_difference) < 0)) {
     return true;
   }
@@ -27,14 +29,15 @@ bool ParticleManager::IsParticleCollision(GasParticle& particle,
 }
 
 bool ParticleManager::IsWallCollision(GasParticle& particle, bool axis) const {
-
   // if particle collides with top or bottom wall of container
   if (axis) {
-    if ((particle.GetVelocity().y < 0) && particle.GetPosition().y -
-         particle.GetRadius() <= top_left_coordinate_.y) {
+    if ((particle.GetVelocity().y < 0) &&
+        particle.GetPosition().y - particle.GetRadius() <=
+            top_left_coordinate_.y) {
       return true;
-    } else if ((particle.GetVelocity().y > 0) && particle.GetPosition().y +
-         particle.GetRadius() >= bottom_right_coordinate_.y) {
+    } else if ((particle.GetVelocity().y > 0) &&
+               particle.GetPosition().y + particle.GetRadius() >=
+                   bottom_right_coordinate_.y) {
       return true;
     }
 
@@ -61,24 +64,29 @@ void ParticleManager::CalculatePostCollisionPosition(GasParticle& particle) {
 
 glm::vec2 ParticleManager::CalculatePostParticleCollisionVelocity(
     GasParticle& particle, GasParticle& target_particle) const {
-
   // Calculating the constant in the equation that calculates new particle
   // velocity after collision with another particle
-  double mass_ratio = 2 * target_particle.GetMass() / (particle.GetMass() + target_particle.GetMass());
-  double constant_in_velocity_equation = mass_ratio * ((glm::dot(particle.GetVelocity() -
-       target_particle.GetVelocity(), particle.GetPosition() -
-       target_particle.GetPosition())) / (pow(glm::length(particle.GetPosition() -
-       target_particle.GetPosition()), 2)));
+  double mass_ratio = 2 * target_particle.GetMass() /
+                      (particle.GetMass() + target_particle.GetMass());
+  double constant_in_velocity_equation =
+      mass_ratio *
+      ((glm::dot(particle.GetVelocity() - target_particle.GetVelocity(),
+                 particle.GetPosition() - target_particle.GetPosition())) /
+       (pow(glm::length(particle.GetPosition() - target_particle.GetPosition()),
+            2)));
 
   // finishes calculating resulting velocity
-  glm::vec2 resulting_velocity = glm::vec2(constant_in_velocity_equation * (particle.GetPosition().x - target_particle.GetPosition().x),
-                          constant_in_velocity_equation * (particle.GetPosition().y - target_particle.GetPosition().y));
+  glm::vec2 resulting_velocity = glm::vec2(
+      constant_in_velocity_equation *
+          (particle.GetPosition().x - target_particle.GetPosition().x),
+      constant_in_velocity_equation *
+          (particle.GetPosition().y - target_particle.GetPosition().y));
 
   return particle.GetVelocity() - resulting_velocity;
 }
 
-void ParticleManager::CalculatePostWallCollisionVelocity(GasParticle& particle, bool axis) {
-
+void ParticleManager::CalculatePostWallCollisionVelocity(GasParticle& particle,
+                                                         bool axis) {
   // Separate out x and y directions of input particle's velocity and store
   // them as doubles
   double x_velocity = particle.GetVelocity().x;
@@ -98,14 +106,14 @@ void ParticleManager::CalculatePostWallCollisionVelocity(GasParticle& particle, 
 }
 
 void ParticleManager::CollidesWithParticle(std::vector<GasParticle>& particle) {
-  for (size_t i = 0; i < particle.size(); i++) {
-    for (size_t j = i + 1; j < particle.size(); j++) {
+  for (size_t i = 0; i < particle.size(); ++i) {
+    for (size_t j = i + 1; j < particle.size(); ++j) {
       // determines resulting velocity if i collides with another
-      if (IsParticleCollision(particle[i],particle[j])) {
-        glm::vec2 velocity_1 = CalculatePostParticleCollisionVelocity(
-                particle[i], particle.at(j));
-        glm::vec2 velocity_2 = CalculatePostParticleCollisionVelocity(
-                particle[j], particle.at(i));
+      if (IsParticleCollision(particle[i], particle[j])) {
+        glm::vec2 velocity_1 =
+            CalculatePostParticleCollisionVelocity(particle[i], particle.at(j));
+        glm::vec2 velocity_2 =
+            CalculatePostParticleCollisionVelocity(particle[j], particle.at(i));
 
         particle[i].SetVelocity(velocity_1);
         particle[j].SetVelocity(velocity_2);
@@ -133,4 +141,4 @@ void ParticleManager::CollidesWithWall(std::vector<GasParticle>& particle) {
   }
 }
 
-} // namespace idealgas
+}  // namespace idealgas

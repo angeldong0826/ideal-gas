@@ -13,12 +13,14 @@ namespace idealgas {
 class GasContainer {
  public:
   /**
-   * Constructor that takes in the boundaries of container and initializes container.
+   * Constructor that takes in the boundaries of container and initializes
+   * container.
    *
    * @param top_left_corner coordinates of top left corner of container
    * @param bottom_right_corner coordinates of bottom right corner of container
    */
-  GasContainer(const glm::vec2& top_left_corner, const glm::vec2& bottom_right_corner);
+  GasContainer(const glm::vec2& top_left_corner,
+               const glm::vec2& bottom_right_corner);
 
   /**
    * Displays the container walls and the current positions of the particles.
@@ -32,7 +34,8 @@ class GasContainer {
   void AdvanceOneFrame();
 
   /**
-   * Method that generates a random number between the lower and upper input bounds.
+   * Method that generates a random number between the lower and upper input
+   * bounds.
    *
    * @param lower_bound as a double
    * @param upper_bound as a double
@@ -49,57 +52,39 @@ class GasContainer {
    * Getter method to retrieve vector of particles in container.
    * @return vector of particles in container
    */
-  std::vector<GasParticle> GetParticles() const ;
-
-//  /**
-//   * Getter method to retrieve pink particles' initial velocity.
-//   *
-//   * @return pink particle initial velocity as a vec2
-//   */
-//  glm::vec2 GetPinkInitialVelocity() const;
-//
-//  /**
-//   * Getter method to retrieve teal particles' initial velocity.
-//   *
-//   * @return teal particle initial velocity as a vec2
-//   */
-//  glm::vec2 GetTealInitialVelocity() const;
-//
-//  /**
-//   * Getter method to retrieve white particles' initial velocity.
-//   *
-//   * @return white particle initial velocity as a vec2
-//   */
-//  glm::vec2 GetWhiteInitialVelocity() const;
+  std::vector<GasParticle> GetParticles() const;
 
  private:
   // container attributes
-  const size_t border_width_ = 5; // border width of container
-  const size_t kParticleAmount = 30; // amount of particles in container
+  const size_t border_width_ = 5;     // border width of container
+  const size_t kParticleAmount = 42;  // amount of particles in container
 
   // pink particles attributes
-  const double kPinkMass = 5.0; // pink particle mass
-  const double kPinkRadius = 7.0; // pink particle radius
-  const ci::Color kPinkColor = "pink"; // pink particle color (lol)
-  const glm::vec2 kPinkInitialVelocity = {6.0,6.0}; // pink particle initial velocity
+  const double kPinkMass = 5.0;         // pink particle mass
+  const double kPinkRadius = 7.0;       // pink particle radius
+  const ci::Color kPinkColor = "pink";  // pink particle color (lol)
+  const glm::vec2 kPinkInitialVelocity = {
+      6.0, 6.0};  // pink particle initial velocity
 
   // teal particles attributes
-  const double kTealMass = 20.0; // teal particle mass
-  const double kTealRadius = 20.0; // teal particle radius
-  const ci::Color kTealColor = "teal"; // teal particle color
-  const glm::vec2 kTealInitialVelocity = {4.0, -4.0}; // teal particle initial velocity
+  const double kTealMass = 20.0;        // teal particle mass
+  const double kTealRadius = 20.0;      // teal particle radius
+  const ci::Color kTealColor = "teal";  // teal particle color
+  const glm::vec2 kTealInitialVelocity = {
+      4.0, -4.0};  // teal particle initial velocity
 
   // white particles attributes
-  const double kWhiteMass = 30.0; // white particle mass
-  const double kWhiteRadius = 30.0; // white particle radius
-  const ci::Color kWhiteColor = "white"; // white particle color
-  const glm::vec2 kWhiteInitialVelocity = {1.4, 1.4}; // white particle initial velocity
+  const double kWhiteMass = 30.0;         // white particle mass
+  const double kWhiteRadius = 30.0;       // white particle radius
+  const ci::Color kWhiteColor = "white";  // white particle color
+  const glm::vec2 kWhiteInitialVelocity = {
+      1.4, 1.4};  // white particle initial velocity
 
-  glm::vec2 top_left_coordinate_; // top left corner of container
-  glm::vec2 bottom_right_coordinate_; // bottom right corner of container
+  glm::vec2 top_left_coordinate_;      // top left corner of container
+  glm::vec2 bottom_right_coordinate_;  // bottom right corner of container
 
-  std::vector<GasParticle> particle_; // vector of particles in container
-  ParticleManager particle_manager; // calculation purposes
+  std::vector<GasParticle> particle_;  // vector of particles in container
+  ParticleManager particle_manager;    // calculation purposes
 };
 
 }  // namespace idealgas

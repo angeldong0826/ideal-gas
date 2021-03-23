@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cinder/Color.h>
+
 #include <string>
 #include <vector>
 
@@ -20,8 +21,8 @@ class GasParticle {
    * @param velocity particle velocity as a vec2
    * @param color particle color as a Color
    **/
-  GasParticle(double mass, double radius, const glm::vec2 position, const glm::vec2 velocity,
-           ci::Color color);
+  GasParticle(double mass, double radius, const glm::vec2 position,
+              const glm::vec2 velocity, ci::Color color);
 
   // Getters
   double GetMass() const;
@@ -38,11 +39,11 @@ class GasParticle {
   void SetColor(ci::Color color);
 
  private:
-  double mass_; // particle mass
-  double radius_; // particle radius
-  glm::vec2 position_; // particle position
-  glm::vec2 velocity_; // particle velocity
-  ci::Color color_; // particle color
+  double mass_;         // particle mass
+  double radius_;       // particle radius
+  glm::vec2 position_;  // particle position
+  glm::vec2 velocity_;  // particle velocity
+  ci::Color color_;     // particle color
 };
 
-} // namespace idealgas
+}  // namespace idealgas

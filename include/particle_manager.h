@@ -16,10 +16,12 @@ class ParticleManager {
    * @param top_left_corner of set container
    * @param bottom_right_corner of set container
    */
-  ParticleManager(glm::vec2 top_left_coordinate, glm::vec2 bottom_right_coordinate);
+  ParticleManager(const glm::vec2& top_left_coordinate,
+                  const glm::vec2& bottom_right_coordinate);
 
   /**
-   * Method that determines whether or not particle collides with another particle.
+   * Method that determines whether or not particle collides with another
+   * particle.
    *
    * @param particle
    * @param target_particle
@@ -77,8 +79,8 @@ class ParticleManager {
   void CollidesWithWall(std::vector<GasParticle>& particle);
 
  private:
-  glm::vec2 top_left_coordinate_; // top left corner of container
-  glm::vec2 bottom_right_coordinate_; // bottom right corner of container
+  glm::vec2 top_left_coordinate_;      // top left corner of container
+  glm::vec2 bottom_right_coordinate_;  // bottom right corner of container
 };
 
-} // namespace idealgas
+}  // namespace idealgas
