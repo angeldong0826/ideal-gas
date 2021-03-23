@@ -112,8 +112,20 @@ void GasContainer::GenerateParticle() {
   }
 }
 
-const std::vector<Particle> GasContainer::GetParticles() const {
+std::vector<Particle> GasContainer::GetParticles() const {
   return particle_;
 }
+
+//glm::vec2 GasContainer::GetPinkInitialVelocity() const {
+//  return kPinkInitialVelocity;
+//}
+//
+//glm::vec2 GasContainer::GetTealInitialVelocity() const {
+//  return kTealInitialVelocity;
+//}
+//
+//glm::vec2 GasContainer::GetWhiteInitialVelocity() const {
+//  return kWhiteInitialVelocity;
+//}
 
 }  // namespace idealgas

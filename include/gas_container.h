@@ -49,7 +49,28 @@ class GasContainer {
    * Getter method to retrieve vector of particles in container.
    * @return vector of particles in container
    */
-  const std::vector<Particle> GetParticles() const;
+  std::vector<Particle> GetParticles() const ;
+
+//  /**
+//   * Getter method to retrieve pink particles' initial velocity.
+//   *
+//   * @return pink particle initial velocity as a vec2
+//   */
+//  glm::vec2 GetPinkInitialVelocity() const;
+//
+//  /**
+//   * Getter method to retrieve teal particles' initial velocity.
+//   *
+//   * @return teal particle initial velocity as a vec2
+//   */
+//  glm::vec2 GetTealInitialVelocity() const;
+//
+//  /**
+//   * Getter method to retrieve white particles' initial velocity.
+//   *
+//   * @return white particle initial velocity as a vec2
+//   */
+//  glm::vec2 GetWhiteInitialVelocity() const;
 
  private:
   // container attributes

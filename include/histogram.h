@@ -2,6 +2,7 @@
 
 #include "cinder/gl/gl.h"
 #include "particle.h"
+#include "gas_container.h"
 
 namespace idealgas {
 
@@ -61,13 +62,6 @@ class Histogram {
   const ci::Rectf chart_teal_ =
       ci::Rectf(glm::vec2(700, 475), glm::vec2(1200, 675));
 
-//  const glm::vec2 kPinkInitialVelocity = {
-//      1.4, 1.4};  // pink particle initial velocity
-//  const glm::vec2 kWhiteInitialVelocity = {
-//      4.0, -4.0};  // white particle initial velocity
-//  const glm::vec2 kTealInitialVelocity = {
-//      6.0, 6.0};  // teal particle initial velocity
-
   const glm::vec2 kPinkInitialVelocity = {
       6.0, 6.0};  // pink particle initial velocity
   const glm::vec2 kWhiteInitialVelocity = {
@@ -86,9 +80,10 @@ class Histogram {
 
   const size_t x_axis_parts = 10; // number of parts to split x-axis into
   const size_t kParticleAmount = 30; // amount of particles in container
+  const size_t kColorAmount = 3; // amount of particle colors in container
 
   const double x_scale_ = (top_right_x_coordinate_ - top_left_x_coordinate_) / x_axis_parts;
-  const double y_scale_ = (pink_bottom_right_coordinate_ - top_right_y_coordinate_) / (kParticleAmount / 3);
+  const double y_scale_ = (pink_bottom_right_coordinate_ - top_right_y_coordinate_) / (kParticleAmount / kColorAmount);
 
   std::map<double, int> map_pink_; // map for pink chart info
   std::map<double, int> map_white_; // map for white chart info
