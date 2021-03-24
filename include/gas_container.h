@@ -54,6 +54,16 @@ class GasContainer {
    */
   std::vector<GasParticle> GetParticles() const;
 
+  /**
+   * Method that slows down particle velocity.
+   */
+  void SlowDown();
+
+  /**
+   * Method that speeds up particle velocity.
+   */
+  void SpeedUp();
+
  private:
   // container attributes
   const size_t border_width_ = 5;     // border width of container

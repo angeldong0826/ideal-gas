@@ -28,6 +28,13 @@ class IdealGasApp : public ci::app::App {
    */
   void update() override;
 
+  /**
+   * Method that applies function from keyboard.
+   *
+   * @param event
+   */
+  void keyDown(cinder::app::KeyEvent event) override;
+
  private:
   const size_t kWindowLength = 1300;    // display window length
   const size_t kWindowWidth = 700;      // display window width

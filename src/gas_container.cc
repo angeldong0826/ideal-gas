@@ -81,5 +81,16 @@ void GasContainer::GenerateParticle() {
 std::vector<GasParticle> GasContainer::GetParticles() const {
   return particle_;
 }
+void GasContainer::SlowDown() {
+  for (auto & particle : particle_) {
+    particle.SetVelocity(particle.GetVelocity() * glm::vec2{0.1,0.1});
+  }
+}
+
+void GasContainer::SpeedUp() {
+  for (auto & particle : particle_) {
+    particle.SetVelocity(particle.GetVelocity() * glm::vec2{2.0,2.0});
+  }
+}
 
 }  // namespace idealgas

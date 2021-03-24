@@ -19,4 +19,13 @@ void IdealGasApp::update() {
   histogram_.AdvanceOneFrame(container_.GetParticles());
 }
 
+void IdealGasApp::keyDown(cinder::app::KeyEvent event) {
+  if (event.getChar() == 'd') {
+    container_.SlowDown();
+  }
+  if (event.getChar() == 'u') {
+    container_.SpeedUp();
+  }
+}
+
 }  // namespace idealgas
