@@ -64,16 +64,15 @@ class Histogram {
    */
   std::map<double, size_t> GetHistogramMap(const ci::Color& color) const;
 
-
   double CalculateMaxSpeed();
 
  private:
   // display attributes
-  const size_t histogram_border_width_ = 2; // histogram border width
-  const size_t histogram_margin_ = 25;   // histogram margin
-  const size_t window_length_ = 1300;    // display window length
-  const size_t window_width_ = 700;      // display window width
-  const size_t container_margin_ = 100;  // container margin
+  const size_t histogram_border_width_ = 2;  // histogram border width
+  const size_t histogram_margin_ = 25;       // histogram margin
+  const size_t window_length_ = 1300;        // display window length
+  const size_t window_width_ = 700;          // display window width
+  const size_t container_margin_ = 100;      // container margin
   const double histogram_width_ =
       (window_width_ - 4.0 * histogram_margin_) / 3;  // histogram width
   const glm::vec2 histogram_top_left_coordinate_ = {
@@ -116,9 +115,9 @@ class Histogram {
   const double teal_bottom_right_coordinate_ =
       chart_teal_.getLowerRight().y;  // bottom right corner of teal chart
 
-  const size_t kBarNumbers = 10; // number of bars displayed
-  const size_t kParticleAmount = 42; // amount of particles in container
-  const size_t kColorAmount = 3; // amount of particle colors in container
+  const size_t kBarNumbers = 10;      // number of bars displayed
+  const size_t kParticleAmount = 42;  // amount of particles in container
+  const size_t kColorAmount = 3;      // amount of particle colors in container
 
   // scaling factor in x direction depending on number of histogram bars
   const double x_scale_ =

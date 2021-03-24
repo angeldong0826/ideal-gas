@@ -6,7 +6,8 @@ using std::vector;
 
 namespace idealgas {
 
-Histogram::Histogram() {}
+Histogram::Histogram() {
+}
 
 void Histogram::Display() {
   // Display histograms
@@ -16,9 +17,12 @@ void Histogram::Display() {
 
   // Display chart outlines
   ci::gl::color(ci::Color("white"));
-  ci::gl::drawStrokedRect(chart_pink_, static_cast<float>(histogram_border_width_) + 1);
-  ci::gl::drawStrokedRect(chart_white_, static_cast<float>(histogram_border_width_) + 1);
-  ci::gl::drawStrokedRect(chart_teal_, static_cast<float>(histogram_border_width_) + 1);
+  ci::gl::drawStrokedRect(chart_pink_,
+                          static_cast<float>(histogram_border_width_) + 1);
+  ci::gl::drawStrokedRect(chart_white_,
+                          static_cast<float>(histogram_border_width_) + 1);
+  ci::gl::drawStrokedRect(chart_teal_,
+                          static_cast<float>(histogram_border_width_) + 1);
 
   // Display axis
   DrawAxis("pink");
@@ -37,7 +41,7 @@ void Histogram::CreateMap() {
   map_teal_.clear();
 
   for (auto &particle : particles_) {
-    double speed = glm::length(particle.GetVelocity()); // speed of particle
+    double speed = glm::length(particle.GetVelocity());  // speed of particle
 
     if (particle.GetColor() == "pink") {
       FillInMap(map_pink_, speed);
@@ -45,12 +49,12 @@ void Histogram::CreateMap() {
       FillInMap(map_teal_, speed);
     } else if (particle.GetColor() == "white") {
       FillInMap(map_white_, speed);
-    }`
+    }
   }
 }
 
 void Histogram::FillInMap(std::map<double, size_t> &map, double speed) {
-  double max_speed = CalculateMaxSpeed(); // maximum speed of particle
+  double max_speed = CalculateMaxSpeed();  // maximum speed of particle
 
   for (size_t i = 0; i < kBarNumbers; ++i) {
     if (speed <= ((i + 1.0) / kBarNumbers) * max_speed) {
@@ -61,44 +65,45 @@ void Histogram::FillInMap(std::map<double, size_t> &map, double speed) {
 }
 
 void Histogram::DrawGraph(const ci::Color &color) const {
-  double top_left_ = chart_pink_.getUpperLeft().x;  // top left coordinate of all histogram charts
+  double top_left_ = chart_pink_.getUpperLeft()
+                         .x;  // top left coordinate of all histogram charts
 
   if (color == ci::Color("pink")) {
-
     for (const auto &particle : map_pink_) {
       size_t count = particle.second;
       ci::gl::color(color);
-      ci::gl::drawStrokedRect(ci::Rectf(
-          glm::vec2{top_left_,
-                    pink_bottom_right_coordinate_ - count * y_scale_},
-          glm::vec2{top_left_ + x_scale_, pink_bottom_right_coordinate_}),
-                              histogram_border_width_);
+      ci::gl::drawStrokedRect(
+          ci::Rectf(
+              glm::vec2{top_left_,
+                        pink_bottom_right_coordinate_ - count * y_scale_},
+              glm::vec2{top_left_ + x_scale_, pink_bottom_right_coordinate_}),
+          histogram_border_width_);
       top_left_ += x_scale_;
     }
 
   } else if (color == ci::Color("white")) {
-
     for (const auto &particle : map_white_) {
       size_t count = particle.second;
       ci::gl::color(color);
-      ci::gl::drawStrokedRect(ci::Rectf(
-          glm::vec2{top_left_,
-                    white_bottom_right_coordinate_ - count * y_scale_},
-          glm::vec2{top_left_ + x_scale_, white_bottom_right_coordinate_}),
-                              histogram_border_width_);
+      ci::gl::drawStrokedRect(
+          ci::Rectf(
+              glm::vec2{top_left_,
+                        white_bottom_right_coordinate_ - count * y_scale_},
+              glm::vec2{top_left_ + x_scale_, white_bottom_right_coordinate_}),
+          histogram_border_width_);
       top_left_ += x_scale_;
     }
 
   } else if (color == ci::Color("teal")) {
-
     for (const auto &particle : map_teal_) {
       size_t count = particle.second;
       ci::gl::color(color);
-      ci::gl::drawStrokedRect(ci::Rectf(
-          glm::vec2{top_left_,
-                    teal_bottom_right_coordinate_ - count * y_scale_},
-          glm::vec2{top_left_ + x_scale_, teal_bottom_right_coordinate_}),
-                              histogram_border_width_);
+      ci::gl::drawStrokedRect(
+          ci::Rectf(
+              glm::vec2{top_left_,
+                        teal_bottom_right_coordinate_ - count * y_scale_},
+              glm::vec2{top_left_ + x_scale_, teal_bottom_right_coordinate_}),
+          histogram_border_width_);
       top_left_ += x_scale_;
     }
   }
@@ -146,7 +151,8 @@ void Histogram::DrawAxis(const cinder::Color &color) const {
   }
 }
 
-std::map<double, size_t> Histogram::GetHistogramMap(const ci::Color& color) const {
+std::map<double, size_t> Histogram::GetHistogramMap(
+    const ci::Color &color) const {
   if (color == "pink") {
     return map_pink_;
   } else if (color == "white") {

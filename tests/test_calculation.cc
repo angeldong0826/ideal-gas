@@ -436,6 +436,43 @@ TEST_CASE("Velocity update after particle-particle collision") {
     REQUIRE(target_particle.GetVelocity().x == Approx(-1.40816f));
     REQUIRE(target_particle.GetVelocity().y == 0.0f);
   }
+
+  SECTION("Pair particle collision with more than two particles") {
+    GasParticle particle_moving_right(1.0, 1.0, glm::vec2{100.0, 100.0},
+                                      glm::vec2{1.0, 0.0}, "pink");
+    GasParticle particle_moving_left(1.0, 1.0, glm::vec2{101.0, 100.0},
+                                     glm::vec2{-1.0, 0.0}, "pink");
+    GasParticle particle_moving_up(1.0, 1.0, glm::vec2{100.0, 100.0},
+                                   glm::vec2{0.0, 1.0}, "pink");
+    GasParticle particle_moving_down(1.0, 1.0, glm::vec2{100.0, 100.0},
+                                     glm::vec2{0.0, -1.0}, "pink");
+    GasParticle particle_moving_diagonally(1.0, 1.0, glm::vec2{100.0, 100.0},
+                                           glm::vec2{1.0, 1.0}, "pink");
+    GasParticle particle_moving_antidiagonally(1.0, 1.0, glm::vec2{101.0, 101.0},
+                                               glm::vec2{-1.0, -1.0}, "pink");
+
+    REQUIRE(calculation.IsParticleCollision(particle_moving_right, particle_moving_left));
+
+    particle_moving_right.SetVelocity(
+        calculation.CalculatePostParticleCollisionVelocity(
+            particle_moving_right, particle_moving_left));
+    particle_moving_left.SetVelocity(
+        calculation.CalculatePostParticleCollisionVelocity(
+            particle_moving_left, particle_moving_right));
+
+    REQUIRE(particle_moving_right.GetVelocity().x == -1.0f);
+    REQUIRE(particle_moving_right.GetVelocity().y == 0.0f);
+    REQUIRE(particle_moving_left.GetVelocity().x == -1.0f);
+    REQUIRE(particle_moving_left.GetVelocity().y == 0.0f);
+
+    particle_moving_right.SetPosition(particle_moving_right.GetPosition() + particle_moving_right.GetVelocity());
+    particle_moving_left.SetPosition(particle_moving_left.GetPosition() + particle_moving_left.GetVelocity());
+
+    REQUIRE(particle_moving_right.GetVelocity().x == -1.0f);
+    REQUIRE(particle_moving_right.GetVelocity().y == 0.0f);
+    REQUIRE(particle_moving_left.GetVelocity().x == -1.0f);
+    REQUIRE(particle_moving_left.GetVelocity().y == 0.0f);
+  }
 }
 
 TEST_CASE("Position update after particle-particle collision") {

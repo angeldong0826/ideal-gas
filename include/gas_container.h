@@ -66,8 +66,8 @@ class GasContainer {
 
  private:
   // container attributes
-  const size_t kContainerBorderWidth = 5;     // border width of container
-  const size_t kParticleAmount = 42;  // amount of particles in container
+  const size_t kContainerBorderWidth = 5;  // border width of container
+  const size_t kParticleAmount = 42;       // amount of particles in container
 
   // pink particles attributes
   const double kPinkMass = 5.0;         // pink particle mass
@@ -94,7 +94,7 @@ class GasContainer {
   glm::vec2 bottom_right_coordinate_;  // bottom right corner of container
 
   std::vector<GasParticle> particle_;  // vector of particles in container
-  ParticleManager particle_manager_;    // calculation purposes
+  ParticleManager particle_manager_;   // calculation purposes
 };
 
 }  // namespace idealgas
