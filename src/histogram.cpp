@@ -9,16 +9,16 @@ namespace idealgas {
 Histogram::Histogram() {}
 
 void Histogram::Display() {
-  // Display chart outlines
-  ci::gl::color(ci::Color("white"));
-  ci::gl::drawStrokedRect(chart_pink_, histogram_border_width_);
-  ci::gl::drawStrokedRect(chart_white_, histogram_border_width_);
-  ci::gl::drawStrokedRect(chart_teal_, histogram_border_width_);
-
   // Display histograms
   DrawGraph(ci::Color("pink"));
   DrawGraph(ci::Color("white"));
   DrawGraph(ci::Color("teal"));
+
+  // Display chart outlines
+  ci::gl::color(ci::Color("white"));
+  ci::gl::drawStrokedRect(chart_pink_, static_cast<float>(histogram_border_width_) + 1);
+  ci::gl::drawStrokedRect(chart_white_, static_cast<float>(histogram_border_width_) + 1);
+  ci::gl::drawStrokedRect(chart_teal_, static_cast<float>(histogram_border_width_) + 1);
 
   // Display axis
   DrawAxis("pink");
@@ -68,10 +68,11 @@ void Histogram::DrawGraph(const ci::Color &color) const {
     for (const auto &particle : map_pink_) {
       size_t count = particle.second;
       ci::gl::color(color);
-      ci::gl::drawSolidRect(ci::Rectf(
+      ci::gl::drawStrokedRect(ci::Rectf(
           glm::vec2{top_left_,
                     pink_bottom_right_coordinate_ - count * y_scale_},
-          glm::vec2{top_left_ + x_scale_, pink_bottom_right_coordinate_}));
+          glm::vec2{top_left_ + x_scale_, pink_bottom_right_coordinate_}),
+                              histogram_border_width_);
       top_left_ += x_scale_;
     }
 
@@ -80,10 +81,11 @@ void Histogram::DrawGraph(const ci::Color &color) const {
     for (const auto &particle : map_white_) {
       size_t count = particle.second;
       ci::gl::color(color);
-      ci::gl::drawSolidRect(ci::Rectf(
+      ci::gl::drawStrokedRect(ci::Rectf(
           glm::vec2{top_left_,
                     white_bottom_right_coordinate_ - count * y_scale_},
-          glm::vec2{top_left_ + x_scale_, white_bottom_right_coordinate_}));
+          glm::vec2{top_left_ + x_scale_, white_bottom_right_coordinate_}),
+                              histogram_border_width_);
       top_left_ += x_scale_;
     }
 
@@ -92,10 +94,11 @@ void Histogram::DrawGraph(const ci::Color &color) const {
     for (const auto &particle : map_teal_) {
       size_t count = particle.second;
       ci::gl::color(color);
-      ci::gl::drawSolidRect(ci::Rectf(
+      ci::gl::drawStrokedRect(ci::Rectf(
           glm::vec2{top_left_,
                     teal_bottom_right_coordinate_ - count * y_scale_},
-          glm::vec2{top_left_ + x_scale_, teal_bottom_right_coordinate_}));
+          glm::vec2{top_left_ + x_scale_, teal_bottom_right_coordinate_}),
+                              histogram_border_width_);
       top_left_ += x_scale_;
     }
   }

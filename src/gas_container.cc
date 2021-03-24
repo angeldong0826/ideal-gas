@@ -6,7 +6,7 @@ namespace idealgas {
 
 GasContainer::GasContainer(const glm::vec2& top_left_coordinate,
                            const glm::vec2& bottom_right_coordinate)
-    : particle_manager(
+    : particle_manager_(
           ParticleManager(top_left_coordinate, bottom_right_coordinate)) {
   top_left_coordinate_ = top_left_coordinate;
   bottom_right_coordinate_ = bottom_right_coordinate;
@@ -18,7 +18,8 @@ void GasContainer::Display() const {
   // Display container
   ci::gl::color(ci::Color("white"));
   ci::gl::drawStrokedRect(
-      ci::Rectf(top_left_coordinate_, bottom_right_coordinate_), border_width_);
+      ci::Rectf(top_left_coordinate_, bottom_right_coordinate_),
+      kContainerBorderWidth);
 
   // Display particle
   for (const auto& particle : particle_) {
@@ -28,12 +29,12 @@ void GasContainer::Display() const {
 }
 
 void GasContainer::AdvanceOneFrame() {
-  particle_manager.CollidesWithParticle(particle_);
-  particle_manager.CollidesWithWall(particle_);
+  particle_manager_.CollidesWithParticle(particle_);
+  particle_manager_.CollidesWithWall(particle_);
 
   // set resulting and updating velocity as new velocity of i
   for (auto& i : particle_) {
-    particle_manager.CalculatePostCollisionPosition(i);
+    particle_manager_.CalculatePostCollisionPosition(i);
   }
 }
 

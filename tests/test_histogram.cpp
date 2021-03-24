@@ -8,13 +8,13 @@ namespace idealgas {
 
 TEST_CASE("Map size update") {
   Histogram histogram;
-  std::vector<GasParticle> particle_;
+  std::vector<GasParticle> particles_;
 
   SECTION("Wrong color") {
     GasParticle particle(15.0, 15.0, glm::vec2{50.0, 67.0}, glm::vec2{3.0, 3.0},
                          "pink");
-    particle_.push_back(particle);
-    histogram.AdvanceOneFrame(particle_);
+    particles_.push_back(particle);
+    histogram.AdvanceOneFrame(particles_);
     std::map<double, int> map = histogram.GetHistogramMap("teal");
     REQUIRE_FALSE(map.size() == 1);
   }
@@ -22,8 +22,8 @@ TEST_CASE("Map size update") {
   SECTION("One pink particle") {
     GasParticle particle(15.0, 15.0, glm::vec2{50.0, 67.0}, glm::vec2{3.0, 3.0},
                          "pink");
-    particle_.push_back(particle);
-    histogram.AdvanceOneFrame(particle_);
+    particles_.push_back(particle);
+    histogram.AdvanceOneFrame(particles_);
     std::map<double, int> map = histogram.GetHistogramMap("pink");
     REQUIRE(map.size() == 1);
   }
@@ -32,10 +32,10 @@ TEST_CASE("Map size update") {
     GasParticle particle(15.0, 15.0, glm::vec2{90,247}, glm::vec2{0.1,0.1}, "pink");
     GasParticle particle_two(15.0, 15.0, glm::vec2{50.0, 67.0}, glm::vec2{3.0, 3.0},"pink");
 
-    particle_.push_back(particle);
-    particle_.push_back(particle_two);
+    particles_.push_back(particle);
+    particles_.push_back(particle_two);
 
-    histogram.AdvanceOneFrame(particle_);
+    histogram.AdvanceOneFrame(particles_);
     std::map<double, int> map = histogram.GetHistogramMap("pink");
     REQUIRE(map.size() == 2);
   }
@@ -43,8 +43,8 @@ TEST_CASE("Map size update") {
   SECTION("One white particle") {
     GasParticle particle(15.0, 15.0, glm::vec2{165.0, 67.0}, glm::vec2{3.0, -3.0},
                          "white");
-    particle_.push_back(particle);
-    histogram.AdvanceOneFrame(particle_);
+    particles_.push_back(particle);
+    histogram.AdvanceOneFrame(particles_);
     std::map<double, int> map = histogram.GetHistogramMap("white");
     REQUIRE(map.size() == 1);
   }
@@ -53,10 +53,10 @@ TEST_CASE("Map size update") {
     GasParticle particle(15.0, 15.0, glm::vec2{90,247}, glm::vec2{0.1,0.1}, "white");
     GasParticle particle_two(15.0, 15.0, glm::vec2{50.0, 67.0}, glm::vec2{3.0, 3.0},"white");
 
-    particle_.push_back(particle);
-    particle_.push_back(particle_two);
+    particles_.push_back(particle);
+    particles_.push_back(particle_two);
 
-    histogram.AdvanceOneFrame(particle_);
+    histogram.AdvanceOneFrame(particles_);
     std::map<double, int> map = histogram.GetHistogramMap("white");
     REQUIRE(map.size() == 2);
   }
@@ -64,8 +64,8 @@ TEST_CASE("Map size update") {
   SECTION("One teal particle") {
     GasParticle particle(15.0, 15.0, glm::vec2{165.0, 67.0}, glm::vec2{3.0, -3.0},
                          "teal");
-    particle_.push_back(particle);
-    histogram.AdvanceOneFrame(particle_);
+    particles_.push_back(particle);
+    histogram.AdvanceOneFrame(particles_);
     std::map<double, int> map = histogram.GetHistogramMap("teal");
     REQUIRE(map.size() == 1);
   }
@@ -75,22 +75,17 @@ TEST_CASE("Map size update") {
     GasParticle particle_two(15.0, 15.0, glm::vec2{50.0, 67.0}, glm::vec2{3.0, 3.0},"teal");
     GasParticle particle_three(15.0, 15.0, glm::vec2{50.0, 67.0}, glm::vec2{3.0, 3.0},"teal");
 
+    particles_.push_back(particle);
+    particles_.push_back(particle_two);
+    particles_.push_back(particle_three);
 
-    particle_.push_back(particle);
-    particle_.push_back(particle_two);
-    particle_.push_back(particle_three);
-
-    histogram.AdvanceOneFrame(particle_);
+    histogram.AdvanceOneFrame(particles_);
     std::map<double, int> map = histogram.GetHistogramMap("teal");
-    double particle_speed_ = glm::length(glm::vec2{0.1,0.1});
-    double particle_two_speed_ = glm::length(glm::vec2{3.0, 3.0});
     REQUIRE(map.size() == 2);
-    REQUIRE(map.at(particle_speed_) == 1);
-    REQUIRE(map.at(particle_two_speed_) == 2);
   }
 }
 
-TEST_CASE("Bar update") {
+TEST_CASE("Histogram Bar update") {
   SECTION("Wrong speed range") {
 
   }
