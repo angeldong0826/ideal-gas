@@ -68,13 +68,14 @@ class Histogram {
   double CalculateMaxSpeed();
 
  private:
+  // display attributes
   const size_t histogram_border_width_ = 2; // histogram border width
   const size_t histogram_margin_ = 25;   // histogram margin
   const size_t window_length_ = 1300;    // display window length
   const size_t window_width_ = 700;      // display window width
   const size_t container_margin_ = 100;  // container margin
   const double histogram_width_ =
-      (window_width_ - 4 * histogram_margin_) / 3;  // histogram width
+      (window_width_ - 4.0 * histogram_margin_) / 3;  // histogram width
   const glm::vec2 histogram_top_left_coordinate_ = {
       window_length_ / 2 + container_margin_ / 2,
       histogram_margin_};  // top left corner of histogram
@@ -101,74 +102,38 @@ class Histogram {
                 histogram_bottom_right_coordinate_.y - histogram_width_},
       histogram_bottom_right_coordinate_);
 
-  // coordinate of all histogram charts
+  // coordinates of histogram charts
   const double top_right_x_coordinate_ =
       chart_pink_.getUpperRight()
-          .x;  // top right x coordinate of all histogram charts
+          .x;  // top right x corner of all histogram charts
   const double top_right_y_coordinate_ =
       chart_pink_.getUpperRight()
-          .y;  // top right y coordinate of all histogram charts
+          .y;  // top right y corner of all histogram charts
   const double pink_bottom_right_coordinate_ =
-      chart_pink_.getLowerRight().y;  // bottom right coordinate of pink chart
+      chart_pink_.getLowerRight().y;  // bottom right corner of pink chart
   const double white_bottom_right_coordinate_ =
-      chart_white_.getLowerRight().y;  // bottom right coordinate of white chart
+      chart_white_.getLowerRight().y;  // bottom right corner of white chart
   const double teal_bottom_right_coordinate_ =
-      chart_teal_.getLowerRight().y;  // bottom right coordinate of teal chart
+      chart_teal_.getLowerRight().y;  // bottom right corner of teal chart
 
-  std::vector<GasParticle> particles_;  // vector of particles in container
-
-  const size_t x_axis_parts = 10;     // number of parts to split x-axis into
-  const size_t kParticleAmount = 42;  // amount of particles in container
-  const size_t kColorAmount = 3;      // amount of particle colors in container
+  const size_t kBarNumbers = 10; // number of bars displayed
+  const size_t kParticleAmount = 42; // amount of particles in container
+  const size_t kColorAmount = 3; // amount of particle colors in container
 
   // scaling factor in x direction depending on number of histogram bars
   const double x_scale_ =
       (top_right_x_coordinate_ - histogram_top_left_coordinate_.x) /
-      x_axis_parts;
+      kBarNumbers;
   // scaling factor in y direction for graph visibility
-  double y_scale_ =
+  const double y_scale_ =
       (pink_bottom_right_coordinate_ - top_right_y_coordinate_) /
       (kParticleAmount / kColorAmount);
+
+  std::vector<GasParticle> particles_;  // vector of particles in container
 
   std::map<double, int> map_pink_;   // map for storing pink chart info
   std::map<double, int> map_white_;  // map for storing white chart info
   std::map<double, int> map_teal_;   // map for storing teal chart info
-
-//  const std::vector<double> pink_speed_range{
-//      (max_speed_ / x_axis_parts) * 1,
-//      (max_speed_ / x_axis_parts) * 2,
-//      (max_speed_ / x_axis_parts) * 3,
-//      (max_speed_ / x_axis_parts) * 4,
-//      (max_speed_ / x_axis_parts) * 5,
-//      (max_speed_ / x_axis_parts) * 6,
-//      (max_speed_ / x_axis_parts) * 7,
-//      (max_speed_ / x_axis_parts) * 8,
-//      (max_speed_ / x_axis_parts) * 9,
-//      (max_speed_ / x_axis_parts) * 10};
-//
-//  const std::vector<double> white_speed_range{
-//      (max_speed_ / x_axis_parts) * 1,
-//      (max_speed_ / x_axis_parts) * 2,
-//      (max_speed_ / x_axis_parts) * 3,
-//      (max_speed_ / x_axis_parts) * 4,
-//      (max_speed_ / x_axis_parts) * 5,
-//      (max_speed_ / x_axis_parts) * 6,
-//      (max_speed_ / x_axis_parts) * 7,
-//      (max_speed_ / x_axis_parts) * 8,
-//      (max_speed_ / x_axis_parts) * 9,
-//      (max_speed_ / x_axis_parts) * 10};
-//
-//  const std::vector<double> teal_speed_range{
-//      (max_speed_ / x_axis_parts) * 1,
-//      (max_speed_ / x_axis_parts) * 2,
-//      (max_speed_ / x_axis_parts) * 3,
-//      (max_speed_ / x_axis_parts) * 4,
-//      (max_speed_ / x_axis_parts) * 5,
-//      (max_speed_ / x_axis_parts) * 6,
-//      (max_speed_ / x_axis_parts) * 7,
-//      (max_speed_ / x_axis_parts) * 8,
-//      (max_speed_ / x_axis_parts) * 9,
-//      (max_speed_ / x_axis_parts) * 10};
 };
 
 }  // namespace idealgas

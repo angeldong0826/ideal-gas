@@ -55,7 +55,9 @@ void GasContainer::GenerateParticle() {
     double random_position_y_ =
         RandomNumberGenerator(top_left_coordinate_.y + kPinkRadius,
                               bottom_right_coordinate_.y - kPinkRadius);
-    glm::vec2 random_position_ = {random_position_x_, random_position_y_};
+    glm::vec2 random_position_ = {
+        random_position_x_,
+        random_position_y_};  // random position particles spawn at
 
     // generates new particle and adds to particle_ vector
     if (particle % 3 == 0) {

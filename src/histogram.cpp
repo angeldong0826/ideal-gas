@@ -37,22 +37,23 @@ void Histogram::CreateMap() {
   map_teal_.clear();
 
   for (auto &particle : particles_) {
-    double speed = glm::length(particle.GetVelocity());
+    double speed = glm::length(particle.GetVelocity()); // speed of particle
 
     if (particle.GetColor() == "pink") {
       FillInMap(map_pink_, speed);
-    } else if (particle.GetColor() == "white") {
-      FillInMap(map_white_, speed);
     } else if (particle.GetColor() == "teal") {
       FillInMap(map_teal_, speed);
+    } else if (particle.GetColor() == "white") {
+      FillInMap(map_white_, speed);
     }
   }
 }
 
 void Histogram::FillInMap(std::map<double, int> &map, double speed) {
-  double max_speed = CalculateMaxSpeed();
-  for (size_t i = 0; i < x_axis_parts; ++i) {
-    if (speed <= ((i+1.0)/x_axis_parts) * max_speed) {
+  double max_speed = CalculateMaxSpeed(); // maximum speed of particle
+
+  for (size_t i = 0; i < kBarNumbers; ++i) {
+    if (speed <= ((i + 1.0) / kBarNumbers) * max_speed) {
       map[i] += 1;
       break;
     }
@@ -75,6 +76,7 @@ void Histogram::DrawGraph(const ci::Color &color) const {
     }
 
   } else if (color == ci::Color("white")) {
+
     for (const auto &particle : map_white_) {
       size_t amount = particle.second;
       ci::gl::color(color);
@@ -86,6 +88,7 @@ void Histogram::DrawGraph(const ci::Color &color) const {
     }
 
   } else if (color == ci::Color("teal")) {
+
     for (const auto &particle : map_teal_) {
       size_t amount = particle.second;
       ci::gl::color(color);

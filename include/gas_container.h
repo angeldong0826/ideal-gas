@@ -62,7 +62,7 @@ class GasContainer {
   // pink particles attributes
   const double kPinkMass = 5.0;         // pink particle mass
   const double kPinkRadius = 7.0;       // pink particle radius
-  const ci::Color kPinkColor = "pink";  // pink particle color (lol)
+  const ci::Color kPinkColor = "pink";  // pink particle color
   const glm::vec2 kPinkInitialVelocity = {
       6.0, 6.0};  // pink particle initial velocity
 

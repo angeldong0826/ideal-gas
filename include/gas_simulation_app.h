@@ -39,7 +39,7 @@ class IdealGasApp : public ci::app::App {
   GasContainer container_ =
       GasContainer(glm::vec2(kContainerMargin, kContainerMargin),
                    kContainerBottomRightCorner);  // instance of container
-  Histogram histogram_;
+  Histogram histogram_; // instance of histogram
 };
 
 }  // namespace idealgas

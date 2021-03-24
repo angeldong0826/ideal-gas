@@ -22,7 +22,7 @@ class GasParticle {
    * @param color particle color as a Color
    **/
   GasParticle(double mass, double radius, const glm::vec2 position,
-              const glm::vec2 velocity, ci::Color color);
+              const glm::vec2 velocity, const ci::Color color);
 
   // Getters
   double GetMass() const;
@@ -32,11 +32,8 @@ class GasParticle {
   ci::Color GetColor() const;
 
   // Setters
-  void SetMass(double mass);
-  void SetRadius(double radius);
   void SetPosition(glm::vec2 position);
   void SetVelocity(glm::vec2 velocity);
-  void SetColor(ci::Color color);
 
  private:
   double mass_;         // particle mass
