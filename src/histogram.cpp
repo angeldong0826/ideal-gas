@@ -66,11 +66,11 @@ void Histogram::DrawGraph(const ci::Color &color) const {
   if (color == ci::Color("pink")) {
 
     for (const auto &particle : map_pink_) {
-      size_t amount = particle.second;
+      size_t count = particle.second;
       ci::gl::color(color);
       ci::gl::drawSolidRect(ci::Rectf(
           glm::vec2{top_left_,
-                    pink_bottom_right_coordinate_ - amount * y_scale_},
+                    pink_bottom_right_coordinate_ - count * y_scale_},
           glm::vec2{top_left_ + x_scale_, pink_bottom_right_coordinate_}));
       top_left_ += x_scale_;
     }
@@ -78,11 +78,11 @@ void Histogram::DrawGraph(const ci::Color &color) const {
   } else if (color == ci::Color("white")) {
 
     for (const auto &particle : map_white_) {
-      size_t amount = particle.second;
+      size_t count = particle.second;
       ci::gl::color(color);
       ci::gl::drawSolidRect(ci::Rectf(
           glm::vec2{top_left_,
-                    white_bottom_right_coordinate_ - amount * y_scale_},
+                    white_bottom_right_coordinate_ - count * y_scale_},
           glm::vec2{top_left_ + x_scale_, white_bottom_right_coordinate_}));
       top_left_ += x_scale_;
     }
@@ -90,11 +90,11 @@ void Histogram::DrawGraph(const ci::Color &color) const {
   } else if (color == ci::Color("teal")) {
 
     for (const auto &particle : map_teal_) {
-      size_t amount = particle.second;
+      size_t count = particle.second;
       ci::gl::color(color);
       ci::gl::drawSolidRect(ci::Rectf(
           glm::vec2{top_left_,
-                    teal_bottom_right_coordinate_ - amount * y_scale_},
+                    teal_bottom_right_coordinate_ - count * y_scale_},
           glm::vec2{top_left_ + x_scale_, teal_bottom_right_coordinate_}));
       top_left_ += x_scale_;
     }
