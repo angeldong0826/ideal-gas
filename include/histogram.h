@@ -41,8 +41,7 @@ class Histogram {
    * @param speed of particles to be sorted
    * @param range of velocities to be displayed
    */
-  void FillInMap(std::map<double, int>& map, double speed,
-                 const std::vector<double>& range);
+  void FillInMap(std::map<double, int>& map, double speed);
 
   /**
    * Method that draws histograms.
@@ -63,11 +62,13 @@ class Histogram {
    *
    * @return map with histogram information
    */
-  std::map<double, int> GetHistogramMap(ci::Color color) const;
+  std::map<double, int> GetHistogramMap(const ci::Color& color) const;
 
-  double CalculateMaxSpeed() const;
+
+  double CalculateMaxSpeed();
 
  private:
+  const size_t histogram_border_width_ = 2; // histogram border width
   const size_t histogram_margin_ = 25;   // histogram margin
   const size_t window_length_ = 1300;    // display window length
   const size_t window_width_ = 700;      // display window width
@@ -100,14 +101,6 @@ class Histogram {
                 histogram_bottom_right_coordinate_.y - histogram_width_},
       histogram_bottom_right_coordinate_);
 
-  const glm::vec2 kPinkInitialVelocity = {
-      6.0, 6.0};  // pink particle initial velocity
-  const glm::vec2 kWhiteInitialVelocity = {
-      4.0, -4.0};  // white particle initial velocity
-  const glm::vec2 kTealInitialVelocity = {
-      1.4, 1.4};  // teal particle initial velocity
-
-  // double top_left_x_coordinate_ = chart_pink_.getUpperLeft().x; // top left
   // coordinate of all histogram charts
   const double top_right_x_coordinate_ =
       chart_pink_.getUpperRight()
@@ -133,7 +126,7 @@ class Histogram {
       (top_right_x_coordinate_ - histogram_top_left_coordinate_.x) /
       x_axis_parts;
   // scaling factor in y direction for graph visibility
-  const double y_scale_ =
+  double y_scale_ =
       (pink_bottom_right_coordinate_ - top_right_y_coordinate_) /
       (kParticleAmount / kColorAmount);
 
@@ -141,41 +134,41 @@ class Histogram {
   std::map<double, int> map_white_;  // map for storing white chart info
   std::map<double, int> map_teal_;   // map for storing teal chart info
 
-  const std::vector<double> pink_speed_range{
-      (glm::length(kPinkInitialVelocity) / x_axis_parts),
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 2,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 3,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 4,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 5,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 6,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 7,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 8,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 9,
-      (glm::length(kPinkInitialVelocity) / x_axis_parts) * 10};
-
-  const std::vector<double> white_speed_range{
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts),
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 2,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 3,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 4,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 5,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 6,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 7,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 8,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 9,
-      (glm::length(kWhiteInitialVelocity) / x_axis_parts) * 10};
-
-  const std::vector<double> teal_speed_range{
-      (glm::length(kTealInitialVelocity) / x_axis_parts),
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 2,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 3,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 4,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 5,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 6,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 7,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 8,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 9,
-      (glm::length(kTealInitialVelocity) / x_axis_parts) * 10};
+//  const std::vector<double> pink_speed_range{
+//      (max_speed_ / x_axis_parts) * 1,
+//      (max_speed_ / x_axis_parts) * 2,
+//      (max_speed_ / x_axis_parts) * 3,
+//      (max_speed_ / x_axis_parts) * 4,
+//      (max_speed_ / x_axis_parts) * 5,
+//      (max_speed_ / x_axis_parts) * 6,
+//      (max_speed_ / x_axis_parts) * 7,
+//      (max_speed_ / x_axis_parts) * 8,
+//      (max_speed_ / x_axis_parts) * 9,
+//      (max_speed_ / x_axis_parts) * 10};
+//
+//  const std::vector<double> white_speed_range{
+//      (max_speed_ / x_axis_parts) * 1,
+//      (max_speed_ / x_axis_parts) * 2,
+//      (max_speed_ / x_axis_parts) * 3,
+//      (max_speed_ / x_axis_parts) * 4,
+//      (max_speed_ / x_axis_parts) * 5,
+//      (max_speed_ / x_axis_parts) * 6,
+//      (max_speed_ / x_axis_parts) * 7,
+//      (max_speed_ / x_axis_parts) * 8,
+//      (max_speed_ / x_axis_parts) * 9,
+//      (max_speed_ / x_axis_parts) * 10};
+//
+//  const std::vector<double> teal_speed_range{
+//      (max_speed_ / x_axis_parts) * 1,
+//      (max_speed_ / x_axis_parts) * 2,
+//      (max_speed_ / x_axis_parts) * 3,
+//      (max_speed_ / x_axis_parts) * 4,
+//      (max_speed_ / x_axis_parts) * 5,
+//      (max_speed_ / x_axis_parts) * 6,
+//      (max_speed_ / x_axis_parts) * 7,
+//      (max_speed_ / x_axis_parts) * 8,
+//      (max_speed_ / x_axis_parts) * 9,
+//      (max_speed_ / x_axis_parts) * 10};
 };
 
 }  // namespace idealgas

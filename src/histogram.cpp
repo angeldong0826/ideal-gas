@@ -6,15 +6,14 @@ using std::vector;
 
 namespace idealgas {
 
-Histogram::Histogram() {
-}
+Histogram::Histogram() {}
 
 void Histogram::Display() {
   // Display chart outlines
   ci::gl::color(ci::Color("white"));
-  ci::gl::drawStrokedRect(chart_pink_, 2);
-  ci::gl::drawStrokedRect(chart_white_, 2);
-  ci::gl::drawStrokedRect(chart_teal_, 2);
+  ci::gl::drawStrokedRect(chart_pink_, histogram_border_width_);
+  ci::gl::drawStrokedRect(chart_white_, histogram_border_width_);
+  ci::gl::drawStrokedRect(chart_teal_, histogram_border_width_);
 
   // Display histograms
   DrawGraph(ci::Color("pink"));
@@ -41,52 +40,30 @@ void Histogram::CreateMap() {
     double speed = glm::length(particle.GetVelocity());
 
     if (particle.GetColor() == "pink") {
-      FillInMap(map_pink_, speed, pink_speed_range);
+      FillInMap(map_pink_, speed);
     } else if (particle.GetColor() == "white") {
-      FillInMap(map_white_, speed, white_speed_range);
+      FillInMap(map_white_, speed);
     } else if (particle.GetColor() == "teal") {
-      FillInMap(map_teal_, speed, teal_speed_range);
+      FillInMap(map_teal_, speed);
     }
   }
 }
 
-void Histogram::FillInMap(std::map<double, int> &map, double speed,
-                          const vector<double> &range) {
-  for (size_t i = 0; i < range.size(); ++i) {
-    if (speed <= range[i]) {
-      map[range[i + 1]] += 1;
+void Histogram::FillInMap(std::map<double, int> &map, double speed) {
+  double max_speed = CalculateMaxSpeed();
+  for (size_t i = 0; i < x_axis_parts; ++i) {
+    if (speed <= ((i+1.0)/x_axis_parts) * max_speed) {
+      map[i] += 1;
       break;
     }
   }
-
-  //  if (speed <= range[0]) {
-  //    map[range[0]] += 1;
-  //  } else if (range[0] <= speed && speed < range[1]) {
-  //    map[range[1]] += 1;
-  //  } else if (range[1] <= speed && speed < range[2]) {
-  //    map[range[2]] += 1;
-  //  } else if (range[2] <= speed && speed < range[3]) {
-  //    map[range[3]] += 1;
-  //  } else if (range[3] <= speed && speed < range[4]) {
-  //    map[range[4]] += 1;
-  //  } else if (range[4] <= speed && speed < range[5]) {
-  //    map[range[5]] += 1;
-  //  } else if (range[5] <= speed && speed < range[6]) {
-  //    map[range[6]] += 1;
-  //  } else if (range[6] <= speed && speed < range[7]) {
-  //    map[range[7]] += 1;
-  //  } else if (range[7] <= speed && speed < range[8]) {
-  //    map[range[8]] += 1;
-  //  } else if (range[8] <= speed) {
-  //    map[range[9]] += 1;
-  //  }
 }
 
 void Histogram::DrawGraph(const ci::Color &color) const {
-  double top_left_ = chart_pink_.getUpperLeft()
-                         .x;  // top left coordinate of all histogram charts
+  double top_left_ = chart_pink_.getUpperLeft().x;  // top left coordinate of all histogram charts
 
   if (color == ci::Color("pink")) {
+
     for (const auto &particle : map_pink_) {
       size_t amount = particle.second;
       ci::gl::color(color);
@@ -163,7 +140,7 @@ void Histogram::DrawAxis(const cinder::Color &color) const {
   }
 }
 
-std::map<double, int> Histogram::GetHistogramMap(ci::Color color) const {
+std::map<double, int> Histogram::GetHistogramMap(const ci::Color& color) const {
   if (color == "pink") {
     return map_pink_;
   } else if (color == "white") {
@@ -173,17 +150,16 @@ std::map<double, int> Histogram::GetHistogramMap(ci::Color color) const {
   }
 }
 
-double Histogram::CalculateMaxSpeed() const {
-  double max_speed_ = 0.0;
-
+double Histogram::CalculateMaxSpeed() {
+  double max_speed = 0;
   for (const auto &i : particles_) {
     double speed = glm::length(i.GetVelocity());
-    if (speed > max_speed_) {
-      max_speed_ = speed;
+    if (speed > max_speed) {
+      max_speed = speed;
     }
   }
-  return max_speed_;
-}
 
+  return max_speed;
+}
 
 }  // namespace idealgas
