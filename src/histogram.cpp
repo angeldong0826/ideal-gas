@@ -45,11 +45,11 @@ void Histogram::CreateMap() {
       FillInMap(map_teal_, speed);
     } else if (particle.GetColor() == "white") {
       FillInMap(map_white_, speed);
-    }
+    }`
   }
 }
 
-void Histogram::FillInMap(std::map<double, int> &map, double speed) {
+void Histogram::FillInMap(std::map<double, size_t> &map, double speed) {
   double max_speed = CalculateMaxSpeed(); // maximum speed of particle
 
   for (size_t i = 0; i < kBarNumbers; ++i) {
@@ -146,7 +146,7 @@ void Histogram::DrawAxis(const cinder::Color &color) const {
   }
 }
 
-std::map<double, int> Histogram::GetHistogramMap(const ci::Color& color) const {
+std::map<double, size_t> Histogram::GetHistogramMap(const ci::Color& color) const {
   if (color == "pink") {
     return map_pink_;
   } else if (color == "white") {

@@ -15,7 +15,7 @@ TEST_CASE("Map size update") {
                          "pink");
     particles_.push_back(particle);
     histogram.AdvanceOneFrame(particles_);
-    std::map<double, int> map = histogram.GetHistogramMap("teal");
+    std::map<double, size_t> map = histogram.GetHistogramMap("teal");
     REQUIRE_FALSE(map.size() == 1);
   }
 
@@ -24,7 +24,7 @@ TEST_CASE("Map size update") {
                          "pink");
     particles_.push_back(particle);
     histogram.AdvanceOneFrame(particles_);
-    std::map<double, int> map = histogram.GetHistogramMap("pink");
+    std::map<double, size_t> map = histogram.GetHistogramMap("pink");
     REQUIRE(map.size() == 1);
   }
 
@@ -36,7 +36,7 @@ TEST_CASE("Map size update") {
     particles_.push_back(particle_two);
 
     histogram.AdvanceOneFrame(particles_);
-    std::map<double, int> map = histogram.GetHistogramMap("pink");
+    std::map<double, size_t> map = histogram.GetHistogramMap("pink");
     REQUIRE(map.size() == 2);
   }
 
@@ -45,7 +45,7 @@ TEST_CASE("Map size update") {
                          "white");
     particles_.push_back(particle);
     histogram.AdvanceOneFrame(particles_);
-    std::map<double, int> map = histogram.GetHistogramMap("white");
+    std::map<double, size_t> map = histogram.GetHistogramMap("white");
     REQUIRE(map.size() == 1);
   }
 
@@ -57,7 +57,7 @@ TEST_CASE("Map size update") {
     particles_.push_back(particle_two);
 
     histogram.AdvanceOneFrame(particles_);
-    std::map<double, int> map = histogram.GetHistogramMap("white");
+    std::map<double, size_t> map = histogram.GetHistogramMap("white");
     REQUIRE(map.size() == 2);
   }
 
@@ -66,7 +66,7 @@ TEST_CASE("Map size update") {
                          "teal");
     particles_.push_back(particle);
     histogram.AdvanceOneFrame(particles_);
-    std::map<double, int> map = histogram.GetHistogramMap("teal");
+    std::map<double, size_t> map = histogram.GetHistogramMap("teal");
     REQUIRE(map.size() == 1);
   }
 
@@ -80,18 +80,29 @@ TEST_CASE("Map size update") {
     particles_.push_back(particle_three);
 
     histogram.AdvanceOneFrame(particles_);
-    std::map<double, int> map = histogram.GetHistogramMap("teal");
+    std::map<double, size_t> map = histogram.GetHistogramMap("teal");
     REQUIRE(map.size() == 2);
   }
 }
 
+// I couldn't figure out how to test my bar updates because my map is from double
+// to int and values can't be obtained from a double key in a map apparently
 TEST_CASE("Histogram Bar update") {
+  Histogram histogram;
+  std::vector<GasParticle> particles_;
+
   SECTION("Wrong speed range") {
 
   }
 
   SECTION("One pink particle") {
-
+//    GasParticle particle(15.0, 15.0, glm::vec2{50.0, 67.0}, glm::vec2{3.0, 3.0},
+//                         "pink");
+//    particles_.push_back(particle);
+//    histogram.AdvanceOneFrame(particles_);
+//    std::map<double, size_t> map = histogram.GetHistogramMap("pink");
+//    REQUIRE(map.size() == 1);
+//    REQUIRE(map.at(glm::length(glm::vec2{3.0, 3.0})) == 1);
   }
 
   SECTION("Multiple pink particles") {

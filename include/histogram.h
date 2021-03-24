@@ -41,7 +41,7 @@ class Histogram {
    * @param speed of particles to be sorted
    * @param range of velocities to be displayed
    */
-  void FillInMap(std::map<double, int>& map, double speed);
+  void FillInMap(std::map<double, size_t>& map, double speed);
 
   /**
    * Method that draws histograms.
@@ -62,7 +62,7 @@ class Histogram {
    *
    * @return map with histogram information
    */
-  std::map<double, int> GetHistogramMap(const ci::Color& color) const;
+  std::map<double, size_t> GetHistogramMap(const ci::Color& color) const;
 
 
   double CalculateMaxSpeed();
@@ -131,9 +131,9 @@ class Histogram {
 
   std::vector<GasParticle> particles_;  // vector of particles in container
 
-  std::map<double, int> map_pink_;   // map for storing pink chart info
-  std::map<double, int> map_white_;  // map for storing white chart info
-  std::map<double, int> map_teal_;   // map for storing teal chart info
+  std::map<double, size_t> map_pink_;   // map for storing pink chart info
+  std::map<double, size_t> map_white_;  // map for storing white chart info
+  std::map<double, size_t> map_teal_;   // map for storing teal chart info
 };
 
 }  // namespace idealgas
