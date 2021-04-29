@@ -3,7 +3,7 @@
 namespace idealgas {
 
 IdealGasApp::IdealGasApp() {
-  ci::app::setWindowSize(kWindowSize, kWindowSize);
+  ci::app::setWindowSize(kWindowLength, kWindowWidth);
 }
 
 void IdealGasApp::draw() {
@@ -11,10 +11,21 @@ void IdealGasApp::draw() {
   ci::gl::clear(background_color);
 
   container_.Display();
+  histogram_.Display();
 }
 
 void IdealGasApp::update() {
   container_.AdvanceOneFrame();
+  histogram_.AdvanceOneFrame(container_.GetParticles());
+}
+
+void IdealGasApp::keyDown(cinder::app::KeyEvent event) {
+  if (event.getChar() == 'd') {
+    container_.SlowDown();
+  }
+  if (event.getChar() == 'u') {
+    container_.SpeedUp();
+  }
 }
 
 }  // namespace idealgas
